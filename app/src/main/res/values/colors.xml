@@ -10,6 +10,8 @@
 
     <color name="bg_selected_color_page_indicator">#E95E5E</color>
     <color name="bg_on_boarding_button_color">#EA5E5E</color>
-    <color name="bg_on_boarding">#282828</color>
+    <color name="bg_on_boarding">#323760</color>
+
+    <color name="bg_home_screen">#323760</color>
 
 </resources>

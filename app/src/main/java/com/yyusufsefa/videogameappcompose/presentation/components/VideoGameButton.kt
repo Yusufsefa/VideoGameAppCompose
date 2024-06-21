@@ -1,4 +1,4 @@
-package com.yyusufsefa.videogameappcompose.ui.presentation.components
+package com.yyusufsefa.videogameappcompose.presentation.components
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.sp
 import com.yyusufsefa.videogameappcompose.R
 
 @Composable
-fun MovieButton(
+fun VideoGameButton(
     modifier: Modifier,
     text: String,
     onClick: () -> Unit,

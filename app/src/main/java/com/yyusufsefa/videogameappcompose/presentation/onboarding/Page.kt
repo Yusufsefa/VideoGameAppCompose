@@ -1,4 +1,4 @@
-package com.yyusufsefa.videogameappcompose.ui.presentation.onboarding
+package com.yyusufsefa.videogameappcompose.presentation.onboarding
 
 import androidx.annotation.DrawableRes
 import com.yyusufsefa.videogameappcompose.R

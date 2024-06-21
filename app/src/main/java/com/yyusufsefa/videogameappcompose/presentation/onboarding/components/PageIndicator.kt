@@ -1,4 +1,4 @@
-package com.yyusufsefa.videogameappcompose.ui.presentation.onboarding.components
+package com.yyusufsefa.videogameappcompose.presentation.onboarding.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
