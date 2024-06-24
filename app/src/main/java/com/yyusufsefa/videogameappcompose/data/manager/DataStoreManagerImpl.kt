@@ -6,7 +6,7 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.preferencesDataStore
-import com.yyusufsefa.videogameappcompose.core.Constants
+import com.yyusufsefa.videogameappcompose.core.constant.Constants
 import com.yyusufsefa.videogameappcompose.domain.manager.DataStoreManager
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
