@@ -6,6 +6,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
+import com.yyusufsefa.videogameappcompose.presentation.home.HomeEvent
+import com.yyusufsefa.videogameappcompose.presentation.home.HomeScreen
+import com.yyusufsefa.videogameappcompose.presentation.home.HomeViewModel
 import com.yyusufsefa.videogameappcompose.presentation.onboarding.OnBoardingScreen
 import com.yyusufsefa.videogameappcompose.presentation.onboarding.OnBoardingViewModel
 
@@ -18,15 +21,6 @@ fun NavGraph(startDestination: String) {
     NavHost(navController = navController, startDestination = startDestination) {
 
         navigation(
-            route = Route.HomeNavigation.route,
-            startDestination = Route.HomeScreen.route
-        ) {
-            composable(route = Route.HomeScreen.route) {
-
-            }
-        }
-
-        navigation(
             route = Route.OnBoardingNavigation.route,
             startDestination = Route.OnBoardingScreen.route
         ) {
@@ -36,5 +30,16 @@ fun NavGraph(startDestination: String) {
             }
         }
 
+
+        navigation(
+            route = Route.HomeNavigation.route,
+            startDestination = Route.HomeScreen.route
+        ) {
+            composable(route = Route.HomeScreen.route) {
+                HomeScreen() {
+
+                }
+            }
+        }
     }
 }

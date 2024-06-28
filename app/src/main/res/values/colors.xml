@@ -13,8 +13,12 @@
     <color name="bg_on_boarding">#323760</color>
 
     <color name="bg_home_screen">#323760</color>
+    <color name="bg_video_game_card">#262A4E</color>
     <color name="bg_search_bar">#25294D</color>
     <color name="hint_text_color">#C0C6F7</color>
     <color name="tint_color_icon_search_bar">#C0C6F7</color>
+
+    <color name="bg_rating">#03FFD2</color>
+    <color name="bg_header_rating">#5A58A0</color>
 
 </resources>

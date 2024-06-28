@@ -28,7 +28,7 @@ import androidx.compose.ui.unit.sp
 import com.yyusufsefa.videogameappcompose.R
 import com.yyusufsefa.videogameappcompose.presentation.components.VideoGameButton
 import com.yyusufsefa.videogameappcompose.presentation.onboarding.components.OnBoardingPage
-import com.yyusufsefa.videogameappcompose.presentation.onboarding.components.PageIndicator
+import com.yyusufsefa.videogameappcompose.presentation.components.PageIndicator
 import com.yyusufsefa.videogameappcompose.ui.theme.VideoGameAppComposeTheme
 import kotlinx.coroutines.launch
 
