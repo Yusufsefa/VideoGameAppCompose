@@ -1,5 +1,6 @@
 package com.yyusufsefa.videogameappcompose.presentation.home
 
+import android.widget.Toast
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -21,14 +22,17 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -37,7 +41,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.yyusufsefa.videogameappcompose.R
 import com.yyusufsefa.videogameappcompose.domain.model.VideoGame
 import com.yyusufsefa.videogameappcompose.presentation.components.PageIndicator
-import com.yyusufsefa.videogameappcompose.presentation.components.SearchBar
+import com.yyusufsefa.videogameappcompose.presentation.components.VideoGameSearchBar
 import com.yyusufsefa.videogameappcompose.presentation.home.components.VideoGameCard
 import com.yyusufsefa.videogameappcompose.presentation.home.components.VideoGameHeaderCard
 import com.yyusufsefa.videogameappcompose.ui.theme.VideoGameAppComposeTheme
@@ -45,23 +49,47 @@ import com.yyusufsefa.videogameappcompose.ui.theme.VideoGameAppComposeTheme
 @Composable
 fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
-    navigateToDetail: (Int) -> Unit
+    navigateToDetail: (Int) -> Unit,
+    navigateToSearch: () -> Unit
 ) {
-    val homeState = viewModel.homeState.value
+    val homeState by viewModel.homeState.collectAsState()
+    val context = LocalContext.current
 
     LaunchedEffect(Unit) {
         viewModel.onEvent(HomeEvent.GetVideoGames(1, 20))
     }
 
-    Box(
+    Column(
         modifier = Modifier
             .fillMaxSize()
             .background(colorResource(id = R.color.bg_home_screen))
     ) {
+
+        Text(
+            modifier = Modifier
+                .align(Alignment.CenterHorizontally)
+                .padding(vertical = 16.dp),
+            text = "Video Games",
+            style = TextStyle(
+                fontSize = 24.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.White
+            )
+        )
+
         when {
             homeState.isLoading -> LoadingScreen()
-            homeState.error.isNotEmpty() -> ErrorScreen(homeState.error)
-            homeState.videoGames.isNotEmpty() -> ContentScreen(homeState, navigateToDetail)
+            homeState.error.isNotEmpty() -> {
+                LaunchedEffect(homeState.error) {
+                    Toast.makeText(context, homeState.error, Toast.LENGTH_LONG).show()
+                }
+            }
+
+            homeState.videoGames.isNotEmpty() -> ContentScreen(
+                homeState,
+                navigateToDetail,
+                navigateToSearch
+            )
         }
     }
 }
@@ -77,31 +105,16 @@ fun LoadingScreen() {
 }
 
 @Composable
-fun ErrorScreen(errorMessage: String) {
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        Text(text = errorMessage, color = Color.Red)
-    }
-}
-
-@Composable
-fun ContentScreen(homeState: HomeState, navigateToDetail: (Int) -> Unit) {
+fun ContentScreen(
+    homeState: HomeState,
+    navigateToDetail: (Int) -> Unit,
+    navigateToSearch: () -> Unit
+) {
     Column(
         modifier = Modifier
             .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-                .padding(top = 8.dp),
-            text = "Video Games",
-            color = Color.White,
-            style = MaterialTheme.typography.displaySmall.copy(fontWeight = FontWeight.SemiBold),
-            fontSize = 24.sp
-        )
 
         Spacer(modifier = Modifier.height(12.dp))
 
@@ -123,10 +136,15 @@ fun ContentScreen(homeState: HomeState, navigateToDetail: (Int) -> Unit) {
                 fontSize = 20.sp
             )
 
-            SearchBar(
-                modifier = Modifier.fillMaxWidth(0.8f),
+            VideoGameSearchBar(
+                modifier = Modifier
+                    .fillMaxWidth(0.8f),
                 hint = "Search",
-                cornerShape = RoundedCornerShape(20.dp)
+                isEnabled = false,
+                cornerShape = RoundedCornerShape(20.dp),
+                onSearchClicked = {
+                    navigateToSearch()
+                }
             )
         }
 
@@ -144,7 +162,7 @@ fun ContentScreen(homeState: HomeState, navigateToDetail: (Int) -> Unit) {
                         .aspectRatio(1f)
                         .padding(8.dp),
                     onClick = {
-                        navigateToDetail(videoGame.id)
+                        videoGame.id?.let { id -> navigateToDetail(id) }
                     }
                 )
             }
@@ -188,6 +206,6 @@ fun TopHeaderSection(headerVideoGames: List<VideoGame>) {
 @Composable
 fun HomeScreenPreview() {
     VideoGameAppComposeTheme {
-        HomeScreen(navigateToDetail = {})
+        HomeScreen(navigateToDetail = {}, navigateToSearch = {})
     }
 }

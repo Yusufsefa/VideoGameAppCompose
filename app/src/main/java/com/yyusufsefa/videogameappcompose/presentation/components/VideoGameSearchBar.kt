@@ -32,6 +32,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -40,7 +41,7 @@ import com.yyusufsefa.videogameappcompose.R
 import com.yyusufsefa.videogameappcompose.ui.theme.VideoGameAppComposeTheme
 
 @Composable
-fun SearchBar(
+fun VideoGameSearchBar(
     modifier: Modifier = Modifier,
     hint: String,
     isEnabled: Boolean = true,
@@ -48,10 +49,11 @@ fun SearchBar(
     elevation: Dp = 4.dp,
     cornerShape: Shape = RoundedCornerShape(12.dp),
     backgroundColor: Int = R.color.bg_home_screen,
+    searchQuery: String = "",
     onSearchClicked: () -> Unit = {},
     onTextChange: (String) -> Unit = {},
 ) {
-    var text by remember { mutableStateOf("") }
+    var text by remember { mutableStateOf(searchQuery) }
 
     Row(
         modifier = modifier
@@ -59,8 +61,7 @@ fun SearchBar(
             .fillMaxWidth()
             .shadow(elevation = elevation, shape = cornerShape)
             .background(color = colorResource(id = backgroundColor), shape = cornerShape)
-            .padding(start = 16.dp, end = 4.dp)
-            .clickable { onSearchClicked() },
+            .padding(start = 16.dp, end = 4.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         BasicTextField(
@@ -87,26 +88,30 @@ fun SearchBar(
                 innerTextField()
             },
             keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardOptions.Default.keyboardType,
+                keyboardType = KeyboardType.Text,
                 imeAction = ImeAction.Search
             ),
             keyboardActions = KeyboardActions(onSearch = { onSearchClicked() }),
             singleLine = true,
             cursorBrush = SolidColor(colorResource(id = R.color.tint_color_icon_search_bar)),
-            modifier = Modifier.weight(5f)
-        )
-        Box(
             modifier = Modifier
-                .size(40.dp)
-                .background(color = Color.Transparent, shape = CircleShape)
+                .weight(1f)
                 .clickable {
-                    if (text.isNotEmpty()) {
+                    if (text.isEmpty()) {
+                        onSearchClicked()
+                    }
+                }
+        )
+        if (text.isNotEmpty()) {
+            Box(
+                modifier = Modifier
+                    .size(40.dp)
+                    .background(color = Color.Transparent, shape = CircleShape)
+                    .clickable {
                         text = ""
                         onTextChange("")
-                    }
-                },
-        ) {
-            if (text.isNotEmpty()) {
+                    },
+            ) {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_clear),
                     contentDescription = null,
@@ -115,7 +120,16 @@ fun SearchBar(
                         .fillMaxSize()
                         .padding(6.dp)
                 )
-            } else {
+            }
+        } else {
+            Box(
+                modifier = Modifier
+                    .size(40.dp)
+                    .background(color = Color.Transparent, shape = CircleShape)
+                    .clickable {
+                        onSearchClicked()
+                    },
+            ) {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_search),
                     contentDescription = null,
@@ -134,6 +148,6 @@ fun SearchBar(
 @Composable
 fun SearchBarPreview() {
     VideoGameAppComposeTheme {
-        SearchBar(hint = "SEARCH")
+        VideoGameSearchBar(hint = "SEARCH")
     }
 }

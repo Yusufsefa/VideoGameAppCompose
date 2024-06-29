@@ -20,5 +20,6 @@
 
     <color name="bg_rating">#03FFD2</color>
     <color name="bg_header_rating">#5A58A0</color>
+    <color name="bg_arrow_back">#6277A4</color>
 
 </resources>

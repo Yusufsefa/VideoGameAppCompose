@@ -56,7 +56,7 @@ fun VideoGameCard(
             .width(200.dp)
             .padding(8.dp)
             .clip(RoundedCornerShape(36.dp))
-            .clickable { onClick?.invoke(videoGame.id) }
+            .clickable { videoGame.id?.let { onClick?.invoke(it) } }
     ) {
 
         Card(
@@ -76,7 +76,7 @@ fun VideoGameCard(
 
             ) {
                 Text(
-                    text = videoGame.name,
+                    text = videoGame.name ?: "",
                     fontSize = 10.sp,
                     color = Color.White,
                     style = MaterialTheme.typography.displaySmall.copy(fontWeight = FontWeight.SemiBold),

@@ -8,5 +8,5 @@ object Constants {
     const val TIMEOUT = 30L
 
     const val BASE_URL = "https://api.rawg.io/api/"
-    const val KEY = "7a61b30ec97f4badaf7f624698852c00"
+    const val KEY = "3ffbe2933c47499e8fc22536e5cda286"
 }

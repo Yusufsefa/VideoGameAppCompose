@@ -46,7 +46,7 @@ fun VideoGameHeaderCard(
             .fillMaxWidth()
             .clip(RoundedCornerShape(32.dp))
             .fillMaxHeight(0.24f)
-            .clickable { onClick?.invoke(videoGame.id) }
+            .clickable { onClick?.invoke(videoGame.id ?: 0) }
     ) {
         val context = LocalContext.current
 
@@ -62,7 +62,7 @@ fun VideoGameHeaderCard(
                 modifier = Modifier
                     .align(Alignment.BottomStart)
                     .padding(start = 16.dp, bottom = 24.dp),
-                text = videoGame.name,
+                text = videoGame.name ?: "",
                 color = Color.White,
                 style = MaterialTheme.typography.displaySmall.copy(fontWeight = FontWeight.SemiBold),
                 fontSize = 24.sp

@@ -7,4 +7,6 @@ interface VideoGameRepository {
 
     suspend fun getVideoGames(page: Int, pageSize: Int): VideoGameResponse
     suspend fun getDetailVideoGame(id: Int): VideoGameDetailResponse
+
+    suspend fun searchVideoGames(query: String): VideoGameResponse
 }

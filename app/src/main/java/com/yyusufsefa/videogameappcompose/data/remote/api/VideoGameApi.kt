@@ -21,4 +21,11 @@ interface VideoGameApi {
         @Path("id") id: Int,
         @Query("key") key: String = KEY
     ): VideoGameDetailResponse
+
+    @GET("games")
+    suspend fun searchVideoGames(
+        @Query("page_size") pageSize: Int = 50,
+        @Query("search") search: String,
+        @Query("key") key: String = KEY
+    ): VideoGameResponse
 }

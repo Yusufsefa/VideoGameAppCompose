@@ -13,4 +13,8 @@ class VideoGameRepositoryImpl(private val videoGameApi: VideoGameApi) :
     override suspend fun getDetailVideoGame(id: Int): VideoGameDetailResponse =
         videoGameApi.getDetailVideoGame(id)
 
+    override suspend fun searchVideoGames(query: String): VideoGameResponse =
+        videoGameApi.searchVideoGames(search = query)
+
+
 }
