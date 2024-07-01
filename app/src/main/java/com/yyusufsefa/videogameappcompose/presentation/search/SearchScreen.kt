@@ -20,6 +20,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -67,27 +68,29 @@ fun SearchScreen(
                 .height(40.dp)
                 .padding(horizontal = 16.dp)
         ) {
+
             Card(
                 modifier = Modifier
                     .size(40.dp)
-                    .clip(RoundedCornerShape(16.dp))
+                    .clip(RoundedCornerShape(8.dp))
                     .clickable {
                         navController.popBackStack()
-                    }
+                    },
+                colors = CardDefaults.cardColors(
+                    containerColor = colorResource(id = R.color.bg_arrow_back).copy(alpha = 0.5f),
+                    contentColor = Color.Blue,
+                    disabledContainerColor = Color.Gray,
+                    disabledContentColor = Color.DarkGray
+                )
             ) {
-                Box(
+                Icon(
+                    imageVector = Icons.Default.ArrowBack,
+                    contentDescription = "Back Icon",
+                    tint = Color.White,
                     modifier = Modifier
-                        .fillMaxSize()
-                        .background(colorResource(id = R.color.bg_arrow_back).copy(alpha = 0.5f)),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.ArrowBack,
-                        contentDescription = "Back Icon",
-                        tint = Color.White,
-                        modifier = Modifier.size(30.dp)
-                    )
-                }
+                        .size(40.dp)
+                        .padding(6.dp)
+                )
             }
 
             VideoGameSearchBar(

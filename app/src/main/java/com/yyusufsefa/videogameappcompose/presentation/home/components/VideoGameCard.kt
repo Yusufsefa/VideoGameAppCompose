@@ -18,13 +18,13 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -52,29 +52,30 @@ fun VideoGameCard(
 
     Box(
         modifier = modifier
-            .height(200.dp)
-            .width(200.dp)
-            .padding(8.dp)
-            .clip(RoundedCornerShape(36.dp))
+            .width(240.dp)
+            .height(250.dp)
             .clickable { videoGame.id?.let { onClick?.invoke(it) } }
     ) {
-
         Card(
             modifier = Modifier
-                .fillMaxHeight()
-                .width(160.dp)
-                .clip(RoundedCornerShape(32.dp))
+                .padding(horizontal = 12.dp, vertical = 40.dp)
+                .fillMaxWidth()
+                .fillMaxHeight(1f)
                 .align(Alignment.BottomCenter),
+            shape = RoundedCornerShape(40.dp),
+            colors = CardDefaults.cardColors(
+                containerColor = colorResource(id = R.color.bg_video_game_card),
+                contentColor = Color.Blue,
+                disabledContainerColor = Color.Gray,
+                disabledContentColor = Color.DarkGray
+            )
         ) {
             Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .fillMaxWidth()
-                    .background(colorResource(id = R.color.bg_video_game_card)),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Bottom
-
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.Bottom,
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
+
                 Text(
                     text = videoGame.name ?: "",
                     fontSize = 10.sp,
@@ -85,8 +86,6 @@ fun VideoGameCard(
                     overflow = TextOverflow.Ellipsis,
                     textAlign = TextAlign.Center
                 )
-
-                Spacer(modifier = Modifier.height(8.dp))
 
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
@@ -110,23 +109,28 @@ fun VideoGameCard(
                         color = Color.White
                     )
                 }
-
             }
         }
 
-        AsyncImage(
-            model = ImageRequest.Builder(context).data(videoGame.imageUrl).build(),
-            contentDescription = null,
-            contentScale = ContentScale.Crop,
+        Card(
             modifier = Modifier
                 .fillMaxWidth()
-                .fillMaxHeight(0.67f)
-                .clip(RoundedCornerShape(24.dp))
-        )
+                .fillMaxHeight(0.6f)
+                .align(Alignment.TopCenter),
+            shape = RoundedCornerShape(24.dp)
+        ) {
+
+            AsyncImage(
+                modifier = Modifier.fillMaxSize(),
+                model = ImageRequest.Builder(context).data(videoGame.imageUrl).build(),
+                contentDescription = null,
+                contentScale = ContentScale.Crop,
+            )
+        }
 
     }
-}
 
+}
 
 @Preview(showBackground = true)
 @Composable
@@ -135,11 +139,14 @@ fun VideGameCardPreview() {
         VideoGameCard(
             videoGame = VideoGame(
                 id = 1,
-                name = "Test dflşkgdfşkgdfsdfk",
+                name = "Test dflşkgdfşkgdfsdfkdfjkgdhfkgdfdkfjghfdddfgkfd",
                 imageUrl = "https://ichef.bbci.co.uk/live-experience/cps/624/cpsprodpb/11787/production/_124395517_bbcbreakingnewsgraphic.jpg",
                 rating = 5.0,
             )
         )
     }
 }
+
+
+
 

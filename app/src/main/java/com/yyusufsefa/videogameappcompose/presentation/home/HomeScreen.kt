@@ -9,15 +9,16 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -55,8 +56,12 @@ fun HomeScreen(
     val homeState by viewModel.homeState.collectAsState()
     val context = LocalContext.current
 
+    val lazyGridState = rememberLazyGridState()
+
     LaunchedEffect(Unit) {
-        viewModel.onEvent(HomeEvent.GetVideoGames(1, 20))
+        if (homeState.videoGames.isEmpty() && !homeState.isLoading) {
+            viewModel.onEvent(HomeEvent.GetVideoGames(1, 20))
+        }
     }
 
     Column(
@@ -88,7 +93,8 @@ fun HomeScreen(
             homeState.videoGames.isNotEmpty() -> ContentScreen(
                 homeState,
                 navigateToDetail,
-                navigateToSearch
+                navigateToSearch,
+                lazyGridState
             )
         }
     }
@@ -108,7 +114,8 @@ fun LoadingScreen() {
 fun ContentScreen(
     homeState: HomeState,
     navigateToDetail: (Int) -> Unit,
-    navigateToSearch: () -> Unit
+    navigateToSearch: () -> Unit,
+    lazyGridState: LazyGridState
 ) {
     Column(
         modifier = Modifier
@@ -118,7 +125,7 @@ fun ContentScreen(
 
         Spacer(modifier = Modifier.height(12.dp))
 
-        TopHeaderSection(headerVideoGames = homeState.headerVideoGames)
+        TopHeaderSection(headerVideoGames = homeState.headerVideoGames, navigateToDetail)
 
         Spacer(modifier = Modifier.height(8.dp))
 
@@ -153,13 +160,13 @@ fun ContentScreen(
         LazyVerticalGrid(
             columns = GridCells.Fixed(2),
             modifier = Modifier.fillMaxSize(),
+            state = lazyGridState,
             contentPadding = PaddingValues(4.dp)
         ) {
             items(homeState.videoGames) { videoGame ->
                 VideoGameCard(
                     videoGame = videoGame,
                     modifier = Modifier
-                        .aspectRatio(1f)
                         .padding(8.dp),
                     onClick = {
                         videoGame.id?.let { id -> navigateToDetail(id) }
@@ -172,7 +179,7 @@ fun ContentScreen(
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun TopHeaderSection(headerVideoGames: List<VideoGame>) {
+fun TopHeaderSection(headerVideoGames: List<VideoGame>, navigateToDetail: (Int) -> Unit) {
 
     val pagerState = rememberPagerState(pageCount = headerVideoGames::size)
 
@@ -185,7 +192,10 @@ fun TopHeaderSection(headerVideoGames: List<VideoGame>) {
                     state = pagerState,
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    VideoGameHeaderCard(videoGame = headerVideoGames[it])
+                    VideoGameHeaderCard(
+                        videoGame = headerVideoGames[it],
+                        onClick = navigateToDetail
+                    )
                 }
             }
         }

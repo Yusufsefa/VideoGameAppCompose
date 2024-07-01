@@ -24,6 +24,6 @@ fun VideoGameDetailResponse.mapToVideoGameDetail(): VideoGameDetail {
         rating = rating,
         releaseDate = released,
         desc = description,
-        platform = platforms.map { it.platform }
+        platforms = parent_platforms.map { it.platform.name }
     )
 }

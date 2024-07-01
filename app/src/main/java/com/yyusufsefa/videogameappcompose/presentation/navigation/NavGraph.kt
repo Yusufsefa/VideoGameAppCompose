@@ -37,7 +37,8 @@ fun NavGraph(startDestination: String) {
         ) {
             composable(route = Route.HomeScreen.route) {
                 HomeScreen(navigateToDetail = {
-
+                    navController.currentBackStackEntry?.savedStateHandle?.set("videoGameId", it)
+                    navController.navigate(Route.DetailVideoGameScreen.route)
                 }, navigateToSearch = {
                     navController.navigate(Route.SearchScreen.route)
                 })
@@ -45,12 +46,15 @@ fun NavGraph(startDestination: String) {
 
             composable(route = Route.SearchScreen.route) {
                 SearchScreen(navController = navController, navigateToDetail = {
+                    navController.currentBackStackEntry?.savedStateHandle?.set("videoGameId", it)
                     navController.navigate(Route.DetailVideoGameScreen.route)
                 })
             }
 
             composable(route = Route.DetailVideoGameScreen.route) {
-                DetailVideoGameScreen()
+                val videoGameId =
+                    navController.previousBackStackEntry?.savedStateHandle?.get<Int>("videoGameId")
+                DetailVideoGameScreen(navController = navController, videoGameId = videoGameId)
             }
         }
 
