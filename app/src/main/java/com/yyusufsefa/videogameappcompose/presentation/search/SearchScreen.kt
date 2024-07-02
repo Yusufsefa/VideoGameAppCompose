@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -21,15 +20,13 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -50,7 +47,7 @@ fun SearchScreen(
     navigateToDetail: (Int) -> Unit
 ) {
     val searchViewState by viewModel.searchState.collectAsState()
-    var searchQuery by rememberSaveable { mutableStateOf("") }
+    val searchQuery = searchViewState.query
 
     LaunchedEffect(searchQuery) {
         viewModel.onEvent(SearchEvent.GetSearchVideoGames(searchQuery))
@@ -68,7 +65,6 @@ fun SearchScreen(
                 .height(40.dp)
                 .padding(horizontal = 16.dp)
         ) {
-
             Card(
                 modifier = Modifier
                     .size(40.dp)
@@ -98,41 +94,57 @@ fun SearchScreen(
                     .fillMaxSize()
                     .padding(horizontal = 12.dp),
                 hint = "Search",
+                searchQuery = searchQuery,
                 onTextChange = {
-                    searchQuery = it
-                    viewModel.onEvent(SearchEvent.GetSearchVideoGames(it))
+                    viewModel.onEvent(SearchEvent.UpdateQuery(it))
+                },
+                onSearchClicked = {
+                    viewModel.onEvent(SearchEvent.GetSearchVideoGames(searchQuery))
                 }
             )
         }
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        if (searchViewState.searchVideoGames.isNotEmpty()) {
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(2),
-                modifier = Modifier.fillMaxSize(),
-                contentPadding = PaddingValues(4.dp)
-            ) {
-                items(searchViewState.searchVideoGames) { videoGame ->
-                    VideoGameCard(
-                        videoGame = videoGame,
-                        modifier = Modifier
-                            .aspectRatio(1f)
-                            .padding(8.dp),
-                        onClick = {
-                            videoGame.id?.let { id -> navigateToDetail(id) }
-                        }
-                    )
+        when {
+            searchViewState.isLoading -> {
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    CircularProgressIndicator()
                 }
             }
-        } else if (searchViewState.error.isNotEmpty()) {
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(text = searchViewState.error)
+
+            searchViewState.searchVideoGames.isNotEmpty() -> {
+                LazyVerticalGrid(
+                    columns = GridCells.Fixed(2),
+                    modifier = Modifier.fillMaxSize(),
+                    contentPadding = PaddingValues(4.dp)
+                ) {
+                    items(searchViewState.searchVideoGames) { videoGame ->
+                        VideoGameCard(
+                            videoGame = videoGame,
+                            modifier = Modifier
+                                .padding(8.dp),
+                            onClick = {
+                                videoGame.id?.let { id -> navigateToDetail(id) }
+                            }
+                        )
+                    }
+                }
+            }
+
+            searchViewState.error.isNotEmpty() -> {
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(text = searchViewState.error)
+                }
             }
         }
     }
 }
+
 

@@ -25,21 +25,25 @@ class SearchViewModel @Inject constructor(private val videoGameUseCase: VideoGam
 
     private var searchJob: Job? = null
 
+    init {
+        if (_searchState.value.query.isNotEmpty()) {
+            onEvent(SearchEvent.GetSearchVideoGames(_searchState.value.query))
+        }
+    }
+
     fun onEvent(event: SearchEvent) {
         when (event) {
             is SearchEvent.GetSearchVideoGames -> {
-                if (event.query.isNotEmpty()) {
-                    getSearchVideoGames(event.query)
-                } else {
-                    // Clear search results when query is empty
-                    _searchState.value = SearchState()
-                }
+                getSearchVideoGames(event.query)
+            }
+            is SearchEvent.UpdateQuery -> {
+                _searchState.value = _searchState.value.copy(query = event.query)
             }
         }
     }
 
     private fun getSearchVideoGames(query: String) {
-        _searchState.value = _searchState.value.copy(query = query)
+        _searchState.value = _searchState.value.copy(isLoading = true)
         searchJob?.cancel()
         searchJob = viewModelScope.launch {
             videoGameUseCase.searchVideoGameUseCase(query)
@@ -79,4 +83,5 @@ class SearchViewModel @Inject constructor(private val videoGameUseCase: VideoGam
         }
     }
 }
+
 

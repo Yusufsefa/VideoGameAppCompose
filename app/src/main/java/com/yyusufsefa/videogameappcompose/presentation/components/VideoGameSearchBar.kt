@@ -143,7 +143,6 @@ fun VideoGameSearchBar(
     }
 }
 
-
 @Preview
 @Composable
 fun SearchBarPreview() {
