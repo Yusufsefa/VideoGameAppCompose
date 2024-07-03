@@ -2,6 +2,7 @@ package com.yyusufsefa.videogameappcompose.di
 
 import android.content.Context
 import androidx.room.Room
+import com.yyusufsefa.videogameappcompose.data.local.TypeConvertor
 import com.yyusufsefa.videogameappcompose.data.local.VideoGameDatabase
 import com.yyusufsefa.videogameappcompose.data.local.dao.VideoGameDao
 import com.yyusufsefa.videogameappcompose.data.remote.api.VideoGameApi
@@ -38,7 +39,9 @@ object AppModule {
         context,
         VideoGameDatabase::class.java,
         "video_game_db"
-    ).build()
+    ).addTypeConverter(TypeConvertor())
+        .fallbackToDestructiveMigration()
+        .build()
 
     @Provides
     @Singleton

@@ -1,6 +1,7 @@
 package com.yyusufsefa.videogameappcompose.data.local.dao
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -11,7 +12,7 @@ interface VideoGameDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(favoriteVideoGame: VideoGameFavoriteEntity)
 
-    @Query("DELETE FROM video_game_favorites")
+    @Delete
     suspend fun delete(favoriteEntity: VideoGameFavoriteEntity)
 
     @Query("SELECT * FROM video_game_favorites")

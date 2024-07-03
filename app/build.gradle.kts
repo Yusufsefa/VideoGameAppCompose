@@ -81,6 +81,7 @@ dependencies {
     // room
     implementation(libs.androidx.room.runtime)
     ksp(libs.androidx.room.compiler)
+    implementation("androidx.room:room-ktx:2.6.1")
 
     // dagger hilt
     implementation(libs.androidx.hilt.navigation.compose)
