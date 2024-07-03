@@ -22,7 +22,7 @@ class MainViewModel @Inject constructor(
     init {
         onBoardingUseCase.getOnBoardingShown().onEach { isShown ->
             if (isShown) {
-                _startDestination.value = Route.HomeNavigation.route
+                _startDestination.value = Route.BottomNavigation.route
             } else {
                 _startDestination.value = Route.OnBoardingNavigation.route
             }

@@ -14,6 +14,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.core.graphics.alpha
 import com.yyusufsefa.videogameappcompose.R
 import com.yyusufsefa.videogameappcompose.presentation.navigation.NavGraph
 import com.yyusufsefa.videogameappcompose.ui.theme.VideoGameAppComposeTheme
@@ -43,7 +44,11 @@ class MainActivity : ComponentActivity() {
                     }
 
                     VideoGameAppComposeTheme {
-                        Box(modifier = Modifier.background(MaterialTheme.colorScheme.background)) {
+                        Box(
+                            modifier = Modifier
+                                .background(MaterialTheme.colorScheme.background)
+                                .fillMaxSize()
+                        ) {
                             NavGraph(startDestination = startDestination!!)
                         }
                     }

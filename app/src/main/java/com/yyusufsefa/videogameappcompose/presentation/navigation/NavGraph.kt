@@ -6,11 +6,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
-import com.yyusufsefa.videogameappcompose.presentation.detail.DetailVideoGameScreen
-import com.yyusufsefa.videogameappcompose.presentation.home.HomeScreen
 import com.yyusufsefa.videogameappcompose.presentation.onboarding.OnBoardingScreen
 import com.yyusufsefa.videogameappcompose.presentation.onboarding.OnBoardingViewModel
-import com.yyusufsefa.videogameappcompose.presentation.search.SearchScreen
 
 
 @Composable
@@ -32,29 +29,11 @@ fun NavGraph(startDestination: String) {
 
 
         navigation(
-            route = Route.HomeNavigation.route,
-            startDestination = Route.HomeScreen.route
+            route = Route.BottomNavigation.route,
+            startDestination = Route.BottomMenuBar.route
         ) {
-            composable(route = Route.HomeScreen.route) {
-                HomeScreen(navigateToDetail = {
-                    navController.currentBackStackEntry?.savedStateHandle?.set("videoGameId", it)
-                    navController.navigate(Route.DetailVideoGameScreen.route)
-                }, navigateToSearch = {
-                    navController.navigate(Route.SearchScreen.route)
-                })
-            }
-
-            composable(route = Route.SearchScreen.route) {
-                SearchScreen(navController = navController, navigateToDetail = {
-                    navController.currentBackStackEntry?.savedStateHandle?.set("videoGameId", it)
-                    navController.navigate(Route.DetailVideoGameScreen.route)
-                })
-            }
-
-            composable(route = Route.DetailVideoGameScreen.route) {
-                val videoGameId =
-                    navController.previousBackStackEntry?.savedStateHandle?.get<Int>("videoGameId")
-                DetailVideoGameScreen(navController = navController, videoGameId = videoGameId)
+            composable(route = Route.BottomMenuBar.route) {
+                BottomMenuBarNavigator()
             }
         }
 

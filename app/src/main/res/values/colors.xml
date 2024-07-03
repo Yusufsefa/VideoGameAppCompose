@@ -23,5 +23,6 @@
     <color name="bg_arrow_back">#6277A4</color>
 
     <color name="bg_detail_screen">#1F1935</color>
+    <color name="bg_bottom_menu_bar">#323760</color>
 
 </resources>
