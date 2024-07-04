@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.yyusufsefa.videogameappcompose.core.api.Resource
 import com.yyusufsefa.videogameappcompose.data.local.model.VideoGameFavoriteEntity
 import com.yyusufsefa.videogameappcompose.data.mapper.mapToVideoGameDetail
+import com.yyusufsefa.videogameappcompose.data.mapper.mapToVideoGameEntity
 import com.yyusufsefa.videogameappcompose.domain.usecase.videoGame.VideoGameUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -31,7 +32,10 @@ class DetailViewModel @Inject constructor(
             }
 
             is DetailEvent.OnFavoriteVideoGame -> {
-                onFavoriteVideoGame(event.videoGameFavoriteEntity, event.isFavorite)
+                handleFavoriteEvent(
+                    event.videoGameDetail.mapToVideoGameEntity(event.isFavorite),
+                    event.isFavorite
+                )
             }
         }
     }
@@ -46,7 +50,7 @@ class DetailViewModel @Inject constructor(
                             videoGameDetail = result.data.mapToVideoGameDetail(),
                             isLoading = false
                         ).also {
-                            getFavoriteVideoGameById(id)
+                            checkIfFavorite(id)
                         }
                     }
 
@@ -64,7 +68,7 @@ class DetailViewModel @Inject constructor(
         }
     }
 
-    private fun onFavoriteVideoGame(favoriteEntity: VideoGameFavoriteEntity, isFavorite: Boolean) {
+    private fun handleFavoriteEvent(favoriteEntity: VideoGameFavoriteEntity, isFavorite: Boolean) {
         viewModelScope.launch {
             if (isFavorite) {
                 insertFavoriteVideoGame(favoriteEntity)
@@ -84,7 +88,7 @@ class DetailViewModel @Inject constructor(
         videoGameUseCase.deleteFavoriteVideoGameUseCase(id)
     }
 
-    private fun getFavoriteVideoGameById(id: Int) {
+    private fun checkIfFavorite(id: Int) {
         viewModelScope.launch {
             val isFavorite = videoGameUseCase.getFavoriteVideoGameByIdUseCase(id) != null
             _detailState.value = _detailState.value.copy(isFavorite = isFavorite)

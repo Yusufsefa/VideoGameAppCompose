@@ -13,12 +13,12 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SearchViewModel @Inject constructor(private val videoGameUseCase: VideoGameUseCase) : ViewModel() {
+class SearchViewModel @Inject constructor(private val videoGameUseCase: VideoGameUseCase) :
+    ViewModel() {
 
     private val _searchState = MutableStateFlow(SearchState())
     val searchState: StateFlow<SearchState> = _searchState.asStateFlow()
@@ -36,6 +36,7 @@ class SearchViewModel @Inject constructor(private val videoGameUseCase: VideoGam
             is SearchEvent.GetSearchVideoGames -> {
                 getSearchVideoGames(event.query)
             }
+
             is SearchEvent.UpdateQuery -> {
                 _searchState.value = _searchState.value.copy(query = event.query)
             }
@@ -65,6 +66,7 @@ class SearchViewModel @Inject constructor(private val videoGameUseCase: VideoGam
                                 )
                             }
                         }
+
                         is Resource.Error -> _searchState.value.copy(
                             error = result.message,
                             isLoading = false,

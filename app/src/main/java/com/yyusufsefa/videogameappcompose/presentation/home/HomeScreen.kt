@@ -22,7 +22,6 @@ import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -41,6 +40,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.yyusufsefa.videogameappcompose.R
 import com.yyusufsefa.videogameappcompose.domain.model.VideoGame
+import com.yyusufsefa.videogameappcompose.presentation.components.LoadingScreen
 import com.yyusufsefa.videogameappcompose.presentation.components.PageIndicator
 import com.yyusufsefa.videogameappcompose.presentation.components.VideoGameSearchBar
 import com.yyusufsefa.videogameappcompose.presentation.home.components.VideoGameCard
@@ -97,16 +97,6 @@ fun HomeScreen(
                 lazyGridState
             )
         }
-    }
-}
-
-@Composable
-fun LoadingScreen() {
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        CircularProgressIndicator()
     }
 }
 

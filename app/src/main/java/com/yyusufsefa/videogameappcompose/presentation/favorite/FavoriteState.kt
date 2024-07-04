@@ -4,6 +4,6 @@ import com.yyusufsefa.videogameappcompose.domain.model.VideoGame
 
 data class FavoriteState(
     val isLoading: Boolean = false,
-    val theMovies: List<VideoGame> = emptyList(),
+    val videoGame: List<VideoGame> = emptyList(),
     val error: String = ""
 )

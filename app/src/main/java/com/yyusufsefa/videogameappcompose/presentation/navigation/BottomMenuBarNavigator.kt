@@ -40,7 +40,7 @@ fun BottomMenuBarNavigator() {
                 title = "Search"
             ),
             BottomNavItem(
-                icon = R.drawable.ic_favorite_border,
+                icon = R.drawable.ic_favorite_bottom_bar_menu,
                 title = "Favorite"
             )
         )
@@ -118,7 +118,9 @@ fun BottomMenuBarNavigator() {
             }
 
             composable(route = Route.FavoriteScreen.route) {
-                FavoriteScreen()
+                FavoriteScreen() {
+                    navigateToDetails(navController, it)
+                }
             }
 
         }

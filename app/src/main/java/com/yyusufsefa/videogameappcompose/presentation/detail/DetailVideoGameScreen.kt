@@ -53,10 +53,9 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.yyusufsefa.videogameappcompose.R
-import com.yyusufsefa.videogameappcompose.data.local.model.VideoGameFavoriteEntity
 import com.yyusufsefa.videogameappcompose.domain.model.PlatformStatus
 import com.yyusufsefa.videogameappcompose.domain.model.VideoGameDetail
-import com.yyusufsefa.videogameappcompose.presentation.home.LoadingScreen
+import com.yyusufsefa.videogameappcompose.presentation.components.LoadingScreen
 
 
 @Composable
@@ -91,17 +90,7 @@ fun DetailVideoGameScreen(
                 detailState = detailState,
                 navToBack = { navController.popBackStack() },
                 onFavoriteClick = { videoGameDetail, isFavorite ->
-                    val favoriteEntity = VideoGameFavoriteEntity(
-                        id = videoGameDetail.id,
-                        name = videoGameDetail.name,
-                        imageUrl = videoGameDetail.imageUrl,
-                        isFavorite = isFavorite,
-                        releaseDate = videoGameDetail.releaseDate,
-                        rating = videoGameDetail.rating,
-                        platforms = videoGameDetail.platforms,
-                        desc = videoGameDetail.desc
-                    )
-                    viewModel.onEvent(DetailEvent.OnFavoriteVideoGame(favoriteEntity, isFavorite))
+                    viewModel.onEvent(DetailEvent.OnFavoriteVideoGame(videoGameDetail, isFavorite))
                 }
             )
         }
