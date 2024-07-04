@@ -2,9 +2,8 @@ package com.yyusufsefa.videogameappcompose.domain.usecase.videoGame
 
 import com.yyusufsefa.videogameappcompose.domain.repository.VideoGameRepository
 
-class DeleteFavoriteVideoGameUseCase(
+class GetFavoriteVideoGameByIdUseCase constructor(
     private val videoGameRepository: VideoGameRepository
 ) {
-    suspend operator fun invoke(id: Int) =
-        videoGameRepository.deleteFavoriteVideoGameById(id)
+    suspend operator fun invoke(id: Int) = videoGameRepository.getFavoriteVideoGameById(id)
 }

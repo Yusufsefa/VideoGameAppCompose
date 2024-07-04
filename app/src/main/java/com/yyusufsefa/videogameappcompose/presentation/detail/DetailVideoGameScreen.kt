@@ -23,11 +23,11 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -53,8 +53,10 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.yyusufsefa.videogameappcompose.R
+import com.yyusufsefa.videogameappcompose.data.local.model.VideoGameFavoriteEntity
 import com.yyusufsefa.videogameappcompose.domain.model.PlatformStatus
 import com.yyusufsefa.videogameappcompose.domain.model.VideoGameDetail
+import com.yyusufsefa.videogameappcompose.presentation.home.LoadingScreen
 
 
 @Composable
@@ -86,27 +88,31 @@ fun DetailVideoGameScreen(
             }
 
             detailState.videoGameDetail != null -> DetailContent(
-                detailState.videoGameDetail!!,
-                navToBack = { navController.popBackStack() }
+                detailState = detailState,
+                navToBack = { navController.popBackStack() },
+                onFavoriteClick = { videoGameDetail, isFavorite ->
+                    val favoriteEntity = VideoGameFavoriteEntity(
+                        id = videoGameDetail.id,
+                        name = videoGameDetail.name,
+                        imageUrl = videoGameDetail.imageUrl,
+                        isFavorite = isFavorite,
+                        releaseDate = videoGameDetail.releaseDate,
+                        rating = videoGameDetail.rating,
+                        platforms = videoGameDetail.platforms,
+                        desc = videoGameDetail.desc
+                    )
+                    viewModel.onEvent(DetailEvent.OnFavoriteVideoGame(favoriteEntity, isFavorite))
+                }
             )
         }
     }
 }
 
 @Composable
-fun LoadingScreen() {
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        CircularProgressIndicator()
-    }
-}
-
-@Composable
 fun DetailContent(
-    videoGameDetail: VideoGameDetail,
-    navToBack: () -> Unit
+    detailState: DetailViewState,
+    navToBack: () -> Unit,
+    onFavoriteClick: (VideoGameDetail, Boolean) -> Unit
 ) {
     val context = LocalContext.current
 
@@ -126,7 +132,8 @@ fun DetailContent(
                 modifier = Modifier
                     .fillMaxWidth()
                     .clip(RoundedCornerShape(bottomEnd = 16.dp, bottomStart = 16.dp)),
-                model = ImageRequest.Builder(context).data(videoGameDetail.imageUrl).build(),
+                model = ImageRequest.Builder(context)
+                    .data(detailState.videoGameDetail?.imageUrl).build(),
                 contentDescription = null,
                 contentScale = ContentScale.Crop
             )
@@ -156,7 +163,12 @@ fun DetailContent(
             Card(
                 modifier = Modifier
                     .align(Alignment.TopEnd)
-                    .padding(16.dp),
+                    .padding(16.dp)
+                    .clickable {
+                        detailState.videoGameDetail?.let {
+                            onFavoriteClick(it, !detailState.isFavorite)
+                        }
+                    },
                 colors = CardDefaults.cardColors(
                     containerColor = colorResource(id = R.color.bg_arrow_back).copy(alpha = 0.5f),
                     contentColor = Color.Blue,
@@ -165,9 +177,9 @@ fun DetailContent(
                 )
             ) {
                 Icon(
-                    imageVector = Icons.Default.FavoriteBorder,
+                    imageVector = if (detailState.isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
                     contentDescription = "Favorite Icon",
-                    tint = Color.White,
+                    tint = if (detailState.isFavorite) Color.Red else Color.White,
                     modifier = Modifier
                         .size(40.dp)
                         .padding(6.dp)
@@ -179,7 +191,7 @@ fun DetailContent(
                     .align(Alignment.BottomCenter)
                     .fillMaxWidth()
                     .padding(vertical = 16.dp),
-                text = videoGameDetail.name,
+                text = detailState.videoGameDetail?.name ?: "",
                 textAlign = TextAlign.Center,
                 style = TextStyle(
                     fontSize = 24.sp,
@@ -198,9 +210,8 @@ fun DetailContent(
             horizontalArrangement = Arrangement.SpaceEvenly,
             verticalAlignment = Alignment.CenterVertically
         ) {
-
             Text(
-                text = videoGameDetail.releaseDate,
+                text = detailState.videoGameDetail?.releaseDate ?: "",
                 style = TextStyle(
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
@@ -214,7 +225,7 @@ fun DetailContent(
                     .fillMaxHeight()
             )
 
-            PlatformIcons(platforms = videoGameDetail.platforms)
+            PlatformIcons(platforms = detailState.videoGameDetail?.platforms ?: emptyList())
 
             Divider(
                 color = Color.Gray,
@@ -236,7 +247,7 @@ fun DetailContent(
                 Spacer(modifier = Modifier.width(4.dp))
 
                 Text(
-                    text = videoGameDetail.rating.toString(),
+                    text = detailState.videoGameDetail?.rating.toString(),
                     style = TextStyle(
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Bold,
@@ -260,13 +271,15 @@ fun DetailContent(
 
         Text(
             modifier = Modifier.padding(horizontal = 16.dp),
-            text = Html.fromHtml(videoGameDetail.desc, Html.FROM_HTML_MODE_COMPACT).toString(),
+            text = Html.fromHtml(detailState.videoGameDetail?.desc, Html.FROM_HTML_MODE_COMPACT)
+                .toString(),
             color = Color.Gray
         )
 
         Spacer(modifier = Modifier.height(16.dp))
     }
 }
+
 
 @Composable
 fun PlatformIcons(platforms: List<String>) {

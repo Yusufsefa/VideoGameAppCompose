@@ -11,7 +11,9 @@ interface VideoGameRepository {
     suspend fun searchVideoGames(query: String): VideoGameResponse
 
     suspend fun insertFavoriteVideoGame(favoriteEntity: VideoGameFavoriteEntity)
-    suspend fun deleteFavoriteVideoGame(favoriteEntity: VideoGameFavoriteEntity)
+    suspend fun deleteFavoriteVideoGameById(id: Int)
     suspend fun getAllFavoriteVideoGames(): List<VideoGameFavoriteEntity>
     suspend fun searchFavoriteVideoGames(query: String): List<VideoGameFavoriteEntity>
+    suspend fun getFavoriteVideoGameById(id: Int): VideoGameFavoriteEntity?
+
 }

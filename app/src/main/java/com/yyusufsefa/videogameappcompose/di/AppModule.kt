@@ -11,6 +11,7 @@ import com.yyusufsefa.videogameappcompose.domain.repository.VideoGameRepository
 import com.yyusufsefa.videogameappcompose.domain.usecase.videoGame.DeleteFavoriteVideoGameUseCase
 import com.yyusufsefa.videogameappcompose.domain.usecase.videoGame.GetAllFavoriteVideoGameUseCase
 import com.yyusufsefa.videogameappcompose.domain.usecase.videoGame.GetDetailVideoGameUseCase
+import com.yyusufsefa.videogameappcompose.domain.usecase.videoGame.GetFavoriteVideoGameByIdUseCase
 import com.yyusufsefa.videogameappcompose.domain.usecase.videoGame.GetSearchFavoriteVideoGameUseCase
 import com.yyusufsefa.videogameappcompose.domain.usecase.videoGame.GetSearchVideoGameUseCase
 import com.yyusufsefa.videogameappcompose.domain.usecase.videoGame.GetVideoGamesUseCase
@@ -93,6 +94,12 @@ object AppModule {
 
     @Provides
     @Singleton
+    fun provideGetFavoriteVideoGameByIdUseCase(repository: VideoGameRepository): GetFavoriteVideoGameByIdUseCase {
+        return GetFavoriteVideoGameByIdUseCase(repository)
+    }
+
+    @Provides
+    @Singleton
     fun provideVideoGameUseCase(
         getVideoGamesUseCase: GetVideoGamesUseCase,
         getDetailVideoGameUseCase: GetDetailVideoGameUseCase,
@@ -100,8 +107,8 @@ object AppModule {
         deleteFavoriteVideoGameUseCase: DeleteFavoriteVideoGameUseCase,
         insertFavoriteVideoGameUseCase: InsertFavoriteVideoGameUseCase,
         getAllFavoriteVideoGameUseCase: GetAllFavoriteVideoGameUseCase,
-        getSearchFavoriteVideoGameUseCase: GetSearchFavoriteVideoGameUseCase
-
+        getSearchFavoriteVideoGameUseCase: GetSearchFavoriteVideoGameUseCase,
+        getFavoriteVideoGameByIdUseCase: GetFavoriteVideoGameByIdUseCase
     ): VideoGameUseCase {
         return VideoGameUseCase(
             getVideoGamesUseCase,
@@ -110,7 +117,8 @@ object AppModule {
             deleteFavoriteVideoGameUseCase,
             insertFavoriteVideoGameUseCase,
             getAllFavoriteVideoGameUseCase,
-            getSearchFavoriteVideoGameUseCase
+            getSearchFavoriteVideoGameUseCase,
+            getFavoriteVideoGameByIdUseCase
         )
     }
 }

@@ -10,8 +10,7 @@ import com.yyusufsefa.videogameappcompose.domain.repository.VideoGameRepository
 class VideoGameRepositoryImpl(
     private val videoGameApi: VideoGameApi,
     private val videoGameDao: VideoGameDao
-) :
-    VideoGameRepository {
+) : VideoGameRepository {
     override suspend fun getVideoGames(page: Int, pageSize: Int): VideoGameResponse =
         videoGameApi.getVideoGames(page, pageSize)
 
@@ -25,8 +24,8 @@ class VideoGameRepositoryImpl(
         videoGameDao.insert(favoriteEntity)
     }
 
-    override suspend fun deleteFavoriteVideoGame(favoriteEntity: VideoGameFavoriteEntity) {
-        videoGameDao.delete(favoriteEntity)
+    override suspend fun deleteFavoriteVideoGameById(id: Int) {
+        videoGameDao.deleteById(id)
     }
 
     override suspend fun getAllFavoriteVideoGames(): List<VideoGameFavoriteEntity> =
@@ -35,6 +34,9 @@ class VideoGameRepositoryImpl(
 
     override suspend fun searchFavoriteVideoGames(query: String): List<VideoGameFavoriteEntity> =
         videoGameDao.searchFavorite(query)
+
+    override suspend fun getFavoriteVideoGameById(id: Int): VideoGameFavoriteEntity? =
+        videoGameDao.getFavoriteVideoGameById(id)
 
 
 }

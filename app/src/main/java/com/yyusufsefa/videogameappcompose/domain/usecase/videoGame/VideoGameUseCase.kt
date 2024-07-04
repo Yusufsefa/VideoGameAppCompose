@@ -7,5 +7,6 @@ data class VideoGameUseCase(
     val deleteFavoriteVideoGameUseCase: DeleteFavoriteVideoGameUseCase,
     val insertFavoriteVideoGameUseCase: InsertFavoriteVideoGameUseCase,
     val getAllFavoriteVideoGameUseCase: GetAllFavoriteVideoGameUseCase,
-    val getSearchFavoriteVideoGameUseCase: GetSearchFavoriteVideoGameUseCase
+    val getSearchFavoriteVideoGameUseCase: GetSearchFavoriteVideoGameUseCase,
+    val getFavoriteVideoGameByIdUseCase: GetFavoriteVideoGameByIdUseCase
 )

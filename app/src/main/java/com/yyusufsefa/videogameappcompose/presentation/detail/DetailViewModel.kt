@@ -3,6 +3,7 @@ package com.yyusufsefa.videogameappcompose.presentation.detail
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.yyusufsefa.videogameappcompose.core.api.Resource
+import com.yyusufsefa.videogameappcompose.data.local.model.VideoGameFavoriteEntity
 import com.yyusufsefa.videogameappcompose.data.mapper.mapToVideoGameDetail
 import com.yyusufsefa.videogameappcompose.domain.usecase.videoGame.VideoGameUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,7 +18,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DetailViewModel @Inject constructor(
-    private val videoGameUseCase: VideoGameUseCase
+    private val videoGameUseCase: VideoGameUseCase,
 ) : ViewModel() {
 
     private val _detailState = MutableStateFlow(DetailViewState())
@@ -27,6 +28,10 @@ class DetailViewModel @Inject constructor(
         when (event) {
             is DetailEvent.GetDetailVideoGames -> {
                 getDetailVideoGames(event.id)
+            }
+
+            is DetailEvent.OnFavoriteVideoGame -> {
+                onFavoriteVideoGame(event.videoGameFavoriteEntity, event.isFavorite)
             }
         }
     }
@@ -40,7 +45,9 @@ class DetailViewModel @Inject constructor(
                         _detailState.value.copy(
                             videoGameDetail = result.data.mapToVideoGameDetail(),
                             isLoading = false
-                        )
+                        ).also {
+                            getFavoriteVideoGameById(id)
+                        }
                     }
 
                     is Resource.Error -> _detailState.value.copy(
@@ -54,6 +61,33 @@ class DetailViewModel @Inject constructor(
                     error = e.message ?: "An unexpected error occurred"
                 )
             }.launchIn(viewModelScope)
+        }
+    }
+
+    private fun onFavoriteVideoGame(favoriteEntity: VideoGameFavoriteEntity, isFavorite: Boolean) {
+        viewModelScope.launch {
+            if (isFavorite) {
+                insertFavoriteVideoGame(favoriteEntity)
+            } else {
+                deleteFavoriteVideoGame(favoriteEntity.id)
+            }
+        }
+
+        _detailState.value = _detailState.value.copy(isFavorite = isFavorite)
+    }
+
+    private suspend fun insertFavoriteVideoGame(favoriteEntity: VideoGameFavoriteEntity) {
+        videoGameUseCase.insertFavoriteVideoGameUseCase(favoriteEntity)
+    }
+
+    private suspend fun deleteFavoriteVideoGame(id: Int) {
+        videoGameUseCase.deleteFavoriteVideoGameUseCase(id)
+    }
+
+    private fun getFavoriteVideoGameById(id: Int) {
+        viewModelScope.launch {
+            val isFavorite = videoGameUseCase.getFavoriteVideoGameByIdUseCase(id) != null
+            _detailState.value = _detailState.value.copy(isFavorite = isFavorite)
         }
     }
 }
