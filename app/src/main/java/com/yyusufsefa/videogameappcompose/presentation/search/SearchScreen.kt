@@ -85,7 +85,7 @@ fun SearchScreen(
                     tint = Color.White,
                     modifier = Modifier
                         .size(Dimens.SearchBarSize)
-                        .padding(Dimens.SearchBarIconPadding)
+                        .padding(Dimens.IconPadding)
                 )
             }
 
