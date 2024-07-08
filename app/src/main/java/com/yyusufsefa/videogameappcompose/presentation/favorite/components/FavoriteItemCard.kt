@@ -34,6 +34,7 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.yyusufsefa.videogameappcompose.domain.model.VideoGame
+import com.yyusufsefa.videogameappcompose.ui.theme.Dimens
 import com.yyusufsefa.videogameappcompose.ui.theme.VideoGameAppComposeTheme
 
 
@@ -48,7 +49,7 @@ fun FavoriteItemCard(
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 12.dp, vertical = 12.dp)
+            .padding(horizontal = Dimens.MarginS, vertical = Dimens.MarginS)
             .clickable { videoGame.id?.let { onClick?.invoke(it) } }
     ) {
         Box(
@@ -58,7 +59,7 @@ fun FavoriteItemCard(
         ) {
             Card(
                 modifier = Modifier.fillMaxSize(),
-                shape = RoundedCornerShape(24.dp)
+                shape = RoundedCornerShape(Dimens.MarginXL)
             ) {
                 AsyncImage(
                     modifier = Modifier.fillMaxSize(),
@@ -71,20 +72,20 @@ fun FavoriteItemCard(
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
-                    .padding(12.dp)
-                    .padding(horizontal = 4.dp, vertical = 4.dp)
+                    .padding(Dimens.MarginS)
+                    .padding(horizontal = Dimens.MarginXXS, vertical = Dimens.MarginXXS)
                     .align(Alignment.TopEnd)
-                    .background(Color(0x80000000), shape = RoundedCornerShape(8.dp))
-                    .padding(horizontal = 8.dp, vertical = 4.dp),
+                    .background(Color(0x80000000), shape = RoundedCornerShape(Dimens.MarginXS))
+                    .padding(horizontal = Dimens.MarginXS, vertical = Dimens.MarginXXS),
                 horizontalArrangement = Arrangement.Center,
             ) {
                 Icon(
                     imageVector = Icons.Default.Star,
                     contentDescription = "Star Icon",
                     tint = Color.Yellow,
-                    modifier = Modifier.size(12.dp)
+                    modifier = Modifier.size(Dimens.MarginS)
                 )
-                Spacer(modifier = Modifier.width(4.dp))
+                Spacer(modifier = Modifier.width(Dimens.MarginXXS))
                 Text(
                     text = videoGame.rating.toString(),
                     fontSize = 13.sp,
@@ -96,7 +97,7 @@ fun FavoriteItemCard(
         Text(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 8.dp),
+                .padding(vertical = Dimens.MarginXS),
             text = videoGame.name.toString(),
             fontSize = 13.sp,
             lineHeight = 13.sp,

@@ -31,20 +31,21 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.yyusufsefa.videogameappcompose.R
 import com.yyusufsefa.videogameappcompose.domain.model.VideoGame
 import com.yyusufsefa.videogameappcompose.presentation.components.LoadingScreen
 import com.yyusufsefa.videogameappcompose.presentation.components.PageIndicator
+import com.yyusufsefa.videogameappcompose.presentation.components.VideoGameCard
 import com.yyusufsefa.videogameappcompose.presentation.components.VideoGameSearchBar
-import com.yyusufsefa.videogameappcompose.presentation.home.components.VideoGameCard
 import com.yyusufsefa.videogameappcompose.presentation.home.components.VideoGameHeaderCard
+import com.yyusufsefa.videogameappcompose.ui.theme.ColorBackground
+import com.yyusufsefa.videogameappcompose.ui.theme.ColorRating
+import com.yyusufsefa.videogameappcompose.ui.theme.Dimens
 import com.yyusufsefa.videogameappcompose.ui.theme.VideoGameAppComposeTheme
 
 @Composable
@@ -67,13 +68,13 @@ fun HomeScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(colorResource(id = R.color.bg_home_screen))
+            .background(ColorBackground)
     ) {
 
         Text(
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
-                .padding(vertical = 16.dp),
+                .padding(vertical = Dimens.MarginM),
             text = "Video Games",
             style = TextStyle(
                 fontSize = 24.sp,
@@ -81,20 +82,17 @@ fun HomeScreen(
                 color = Color.White
             )
         )
-
         when {
             homeState.isLoading -> LoadingScreen()
             homeState.error.isNotEmpty() -> {
-                LaunchedEffect(homeState.error) {
-                    Toast.makeText(context, homeState.error, Toast.LENGTH_LONG).show()
-                }
+                Toast.makeText(context, homeState.error, Toast.LENGTH_LONG).show()
             }
 
             homeState.videoGames.isNotEmpty() -> ContentScreen(
                 homeState,
+                lazyGridState,
                 navigateToDetail,
-                navigateToSearch,
-                lazyGridState
+                navigateToSearch
             )
         }
     }
@@ -103,9 +101,9 @@ fun HomeScreen(
 @Composable
 fun ContentScreen(
     homeState: HomeState,
+    lazyGridState: LazyGridState,
     navigateToDetail: (Int) -> Unit,
     navigateToSearch: () -> Unit,
-    lazyGridState: LazyGridState
 ) {
     Column(
         modifier = Modifier
@@ -113,15 +111,15 @@ fun ContentScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        Spacer(modifier = Modifier.height(12.dp))
+        Spacer(modifier = Modifier.height(Dimens.MarginS))
 
         TopHeaderSection(headerVideoGames = homeState.headerVideoGames, navigateToDetail)
 
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(Dimens.MarginXS))
 
         Row(
             modifier = Modifier
-                .padding(horizontal = 16.dp)
+                .padding(horizontal = Dimens.MarginM)
                 .fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
@@ -138,26 +136,26 @@ fun ContentScreen(
                     .fillMaxWidth(0.8f),
                 hint = "Search",
                 isEnabled = false,
-                cornerShape = RoundedCornerShape(20.dp),
+                cornerShape = RoundedCornerShape(Dimens.MarginL),
                 onSearchClicked = {
                     navigateToSearch()
                 }
             )
         }
 
-        Spacer(modifier = Modifier.height(12.dp))
+        Spacer(modifier = Modifier.height(Dimens.MarginS))
 
         LazyVerticalGrid(
             columns = GridCells.Fixed(2),
             modifier = Modifier.fillMaxSize(),
             state = lazyGridState,
-            contentPadding = PaddingValues(4.dp)
+            contentPadding = PaddingValues(Dimens.MarginXXS)
         ) {
             items(homeState.videoGames) { videoGame ->
                 VideoGameCard(
                     videoGame = videoGame,
                     modifier = Modifier
-                        .padding(8.dp),
+                        .padding(Dimens.MarginXS),
                     onClick = {
                         videoGame.id?.let { id -> navigateToDetail(id) }
                     }
@@ -175,7 +173,7 @@ fun TopHeaderSection(headerVideoGames: List<VideoGame>, navigateToDetail: (Int) 
 
     Box(modifier = Modifier.fillMaxWidth()) {
         LazyColumn(
-            modifier = Modifier.padding(horizontal = 16.dp)
+            modifier = Modifier.padding(horizontal = Dimens.MarginM)
         ) {
             item {
                 HorizontalPager(
@@ -193,10 +191,10 @@ fun TopHeaderSection(headerVideoGames: List<VideoGame>, navigateToDetail: (Int) 
         PageIndicator(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
-                .padding(8.dp),
+                .padding(Dimens.MarginXS),
             pagesSize = headerVideoGames.size,
             selectedPage = pagerState.currentPage,
-            selectedColor = colorResource(id = R.color.bg_rating)
+            selectedColor = ColorRating
         )
     }
 }

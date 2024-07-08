@@ -14,7 +14,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.core.graphics.alpha
 import com.yyusufsefa.videogameappcompose.R
 import com.yyusufsefa.videogameappcompose.presentation.navigation.NavGraph
 import com.yyusufsefa.videogameappcompose.ui.theme.VideoGameAppComposeTheme
@@ -32,15 +31,15 @@ class MainActivity : ComponentActivity() {
             val startDestination by viewModel.startDestination.collectAsState()
 
             SideEffect {
-                window.statusBarColor = getColor(R.color.bg_home_screen)
-                window.navigationBarColor = getColor(R.color.bg_home_screen)
+                window.statusBarColor = getColor(R.color.color_background)
+                window.navigationBarColor = getColor(R.color.color_background)
             }
 
             VideoGameAppComposeTheme {
                 if (startDestination != null) {
                     SideEffect {
-                        window.statusBarColor = getColor(R.color.bg_home_screen)
-                        window.navigationBarColor = getColor(R.color.bg_home_screen)
+                        window.statusBarColor = getColor(R.color.color_background)
+                        window.navigationBarColor = getColor(R.color.color_background)
                     }
 
                     VideoGameAppComposeTheme {

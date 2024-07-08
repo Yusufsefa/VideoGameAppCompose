@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.yyusufsefa.videogameappcompose.domain.usecase.onboarding.OnBoardingUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -22,7 +21,7 @@ class OnBoardingViewModel @Inject constructor(
     }
 
     private fun saveOnBoardingState(completed: Boolean) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             onBoardingUseCase.saveOnBoardingShown(isShown = completed)
         }
     }

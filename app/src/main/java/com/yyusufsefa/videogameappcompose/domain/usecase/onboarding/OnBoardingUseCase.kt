@@ -1,6 +1,8 @@
 package com.yyusufsefa.videogameappcompose.domain.usecase.onboarding
 
-data class OnBoardingUseCase(
+import javax.inject.Inject
+
+data class OnBoardingUseCase @Inject constructor(
     val saveOnBoardingShown: SaveOnBoardingShown,
     val getOnBoardingShown: GetOnBoardingShown
 )

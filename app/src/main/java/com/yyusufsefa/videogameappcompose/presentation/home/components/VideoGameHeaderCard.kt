@@ -27,11 +27,11 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.yyusufsefa.videogameappcompose.domain.model.VideoGame
+import com.yyusufsefa.videogameappcompose.ui.theme.Dimens
 import com.yyusufsefa.videogameappcompose.ui.theme.VideoGameAppComposeTheme
 
 @Composable
@@ -44,8 +44,8 @@ fun VideoGameHeaderCard(
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(32.dp))
-            .height(200.dp)
+            .clip(RoundedCornerShape(Dimens.MarginXXXL))
+            .height(Dimens.VideoGameHeaderCardHeight)
             .clickable { onClick?.invoke(videoGame.id ?: 0) }
     ) {
         val context = LocalContext.current
@@ -61,7 +61,7 @@ fun VideoGameHeaderCard(
             Text(
                 modifier = Modifier
                     .align(Alignment.BottomStart)
-                    .padding(start = 16.dp, bottom = 24.dp),
+                    .padding(start = Dimens.MarginM, bottom = Dimens.MarginXL),
                 text = videoGame.name ?: "",
                 color = Color.White,
                 style = MaterialTheme.typography.displaySmall.copy(fontWeight = FontWeight.SemiBold),
@@ -72,17 +72,17 @@ fun VideoGameHeaderCard(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
                     .align(Alignment.BottomEnd)
-                    .padding(16.dp)
-                    .background(Color(0x80000000), shape = RoundedCornerShape(8.dp))
-                    .padding(horizontal = 8.dp, vertical = 4.dp)
+                    .padding(Dimens.MarginM)
+                    .background(Color(0x80000000), shape = RoundedCornerShape(Dimens.MarginXS))
+                    .padding(horizontal = Dimens.MarginXS, vertical = Dimens.MarginXXS)
             ) {
                 Icon(
                     imageVector = Icons.Default.Star,
                     contentDescription = "Star Icon",
                     tint = Color.Yellow,
-                    modifier = Modifier.size(20.dp)
+                    modifier = Modifier.size(Dimens.MarginL)
                 )
-                Spacer(modifier = Modifier.width(4.dp))
+                Spacer(modifier = Modifier.width(Dimens.MarginXXS))
                 Text(
                     text = videoGame.rating.toString(),
                     fontSize = 18.sp,
@@ -106,6 +106,5 @@ fun VideoGameHeaderCardPreview() {
                 rating = 5.0
             )
         )
-
     }
 }

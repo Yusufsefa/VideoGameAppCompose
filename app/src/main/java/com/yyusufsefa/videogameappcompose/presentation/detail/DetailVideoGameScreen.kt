@@ -41,7 +41,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -56,6 +55,9 @@ import com.yyusufsefa.videogameappcompose.R
 import com.yyusufsefa.videogameappcompose.domain.model.PlatformStatus
 import com.yyusufsefa.videogameappcompose.domain.model.VideoGameDetail
 import com.yyusufsefa.videogameappcompose.presentation.components.LoadingScreen
+import com.yyusufsefa.videogameappcompose.ui.theme.ColorArrowBack
+import com.yyusufsefa.videogameappcompose.ui.theme.ColorDetailScreen
+import com.yyusufsefa.videogameappcompose.ui.theme.Dimens
 
 
 @Composable
@@ -76,7 +78,7 @@ fun DetailVideoGameScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(colorResource(id = R.color.bg_detail_screen))
+            .background(ColorDetailScreen)
     ) {
         when {
             detailState.isLoading -> LoadingScreen()
@@ -108,19 +110,24 @@ fun DetailContent(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(colorResource(id = R.color.bg_detail_screen))
+            .background(ColorDetailScreen)
             .verticalScroll(rememberScrollState())
             .statusBarsPadding()
     ) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(450.dp)
+                .height(Dimens.DetailImageHeight)
         ) {
             AsyncImage(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clip(RoundedCornerShape(bottomEnd = 16.dp, bottomStart = 16.dp)),
+                    .clip(
+                        RoundedCornerShape(
+                            bottomEnd = Dimens.MarginM,
+                            bottomStart = Dimens.MarginM
+                        )
+                    ),
                 model = ImageRequest.Builder(context)
                     .data(detailState.videoGameDetail?.imageUrl).build(),
                 contentDescription = null,
@@ -130,10 +137,10 @@ fun DetailContent(
             Card(
                 modifier = Modifier
                     .align(Alignment.TopStart)
-                    .padding(16.dp)
+                    .padding(Dimens.MarginM)
                     .clickable { navToBack() },
                 colors = CardDefaults.cardColors(
-                    containerColor = colorResource(id = R.color.bg_arrow_back).copy(alpha = 0.5f),
+                    containerColor = ColorArrowBack.copy(alpha = 0.5f),
                     contentColor = Color.Blue,
                     disabledContainerColor = Color.Gray,
                     disabledContentColor = Color.DarkGray
@@ -144,22 +151,22 @@ fun DetailContent(
                     contentDescription = "Back Icon",
                     tint = Color.White,
                     modifier = Modifier
-                        .size(40.dp)
-                        .padding(6.dp)
+                        .size(Dimens.Margin4XL)
+                        .padding(Dimens.IconPadding)
                 )
             }
 
             Card(
                 modifier = Modifier
                     .align(Alignment.TopEnd)
-                    .padding(16.dp)
+                    .padding(Dimens.MarginM)
                     .clickable {
                         detailState.videoGameDetail?.let {
                             onFavoriteClick(it, !detailState.isFavorite)
                         }
                     },
                 colors = CardDefaults.cardColors(
-                    containerColor = colorResource(id = R.color.bg_arrow_back).copy(alpha = 0.5f),
+                    containerColor = ColorArrowBack.copy(alpha = 0.5f),
                     contentColor = Color.Blue,
                     disabledContainerColor = Color.Gray,
                     disabledContentColor = Color.DarkGray
@@ -170,8 +177,8 @@ fun DetailContent(
                     contentDescription = "Favorite Icon",
                     tint = if (detailState.isFavorite) Color.Red else Color.White,
                     modifier = Modifier
-                        .size(40.dp)
-                        .padding(6.dp)
+                        .size(Dimens.Margin4XL)
+                        .padding(Dimens.IconPadding)
                 )
             }
 
@@ -179,7 +186,7 @@ fun DetailContent(
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
                     .fillMaxWidth()
-                    .padding(vertical = 16.dp),
+                    .padding(vertical = Dimens.MarginM),
                 text = detailState.videoGameDetail?.name ?: "",
                 textAlign = TextAlign.Center,
                 style = TextStyle(
@@ -190,12 +197,12 @@ fun DetailContent(
             )
         }
 
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(Dimens.MarginXS))
 
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(30.dp),
+                .height(Dimens.MarginXXL),
             horizontalArrangement = Arrangement.SpaceEvenly,
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -230,10 +237,10 @@ fun DetailContent(
                     imageVector = Icons.Default.Star,
                     contentDescription = "Rating Icon",
                     tint = Color.Yellow,
-                    modifier = Modifier.size(24.dp)
+                    modifier = Modifier.size(Dimens.MarginXL)
                 )
 
-                Spacer(modifier = Modifier.width(4.dp))
+                Spacer(modifier = Modifier.width(Dimens.MarginXXS))
 
                 Text(
                     text = detailState.videoGameDetail?.rating.toString(),
@@ -246,10 +253,10 @@ fun DetailContent(
             }
         }
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(Dimens.MarginM))
 
         Text(
-            modifier = Modifier.padding(16.dp),
+            modifier = Modifier.padding(Dimens.MarginM),
             text = "About Game",
             style = TextStyle(
                 fontSize = 18.sp,
@@ -259,13 +266,13 @@ fun DetailContent(
         )
 
         Text(
-            modifier = Modifier.padding(horizontal = 16.dp),
+            modifier = Modifier.padding(horizontal = Dimens.MarginM),
             text = Html.fromHtml(detailState.videoGameDetail?.desc, Html.FROM_HTML_MODE_COMPACT)
                 .toString(),
             color = Color.Gray
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(Dimens.MarginM))
     }
 }
 
@@ -281,19 +288,19 @@ fun PlatformIcons(platforms: List<String>) {
                 PlatformStatus.PC -> Image(
                     painter = painterResource(id = R.drawable.ic_pc_platform),
                     contentDescription = "PC Platform",
-                    modifier = Modifier.padding(horizontal = 4.dp)
+                    modifier = Modifier.padding(horizontal = Dimens.MarginXXS)
                 )
 
                 PlatformStatus.PlayStation -> Image(
                     painter = painterResource(id = R.drawable.ic_ps_platform),
                     contentDescription = "PlayStation Platform",
-                    modifier = Modifier.padding(horizontal = 4.dp)
+                    modifier = Modifier.padding(horizontal = Dimens.MarginXXS)
                 )
 
                 PlatformStatus.Xbox -> Image(
                     painter = painterResource(id = R.drawable.ic_xbox_platform),
                     contentDescription = "Xbox Platform",
-                    modifier = Modifier.padding(horizontal = 4.dp)
+                    modifier = Modifier.padding(horizontal = Dimens.MarginXXS)
                 )
 
                 null -> {

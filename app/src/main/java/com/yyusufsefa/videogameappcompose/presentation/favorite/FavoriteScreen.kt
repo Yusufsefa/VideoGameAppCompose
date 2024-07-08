@@ -19,13 +19,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.yyusufsefa.videogameappcompose.R
 import com.yyusufsefa.videogameappcompose.presentation.components.LoadingScreen
 import com.yyusufsefa.videogameappcompose.presentation.favorite.components.FavoriteItemCard
+import com.yyusufsefa.videogameappcompose.ui.theme.ColorBackground
+import com.yyusufsefa.videogameappcompose.ui.theme.Dimens
 
 @Composable
 fun FavoriteScreen(
@@ -43,11 +43,11 @@ fun FavoriteScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(colorResource(id = R.color.bg_home_screen))
+            .background(ColorBackground)
     ) {
 
         Text(
-            modifier = Modifier.padding(16.dp),
+            modifier = Modifier.padding(Dimens.MarginM),
             text = "Favorite",
             style = MaterialTheme.typography.displayMedium.copy(fontWeight = FontWeight.Bold),
             color = Color.White
@@ -61,11 +61,11 @@ fun FavoriteScreen(
                     columns = GridCells.Fixed(2),
                     modifier = Modifier.fillMaxSize(),
                     state = lazyGridState,
-                    contentPadding = PaddingValues(4.dp)
+                    contentPadding = PaddingValues(Dimens.MarginXXS)
                 ) {
                     items(favoriteState.videoGame) { videoGame ->
                         FavoriteItemCard(
-                            modifier = Modifier.padding(4.dp),
+                            modifier = Modifier.padding(Dimens.MarginXXS),
                             videoGame = videoGame,
                             onClick = {
                                 videoGame.id?.let { id -> navigateToDetail(id) }
@@ -77,7 +77,9 @@ fun FavoriteScreen(
 
             favoriteState.error.isNotEmpty() -> {
                 Box(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(horizontal = Dimens.MarginM),
                     contentAlignment = Alignment.Center
                 ) {
                     Text(

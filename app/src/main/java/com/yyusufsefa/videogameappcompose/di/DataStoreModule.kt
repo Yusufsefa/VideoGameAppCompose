@@ -6,6 +6,7 @@ import com.yyusufsefa.videogameappcompose.domain.manager.DataStoreManager
 import com.yyusufsefa.videogameappcompose.domain.usecase.onboarding.GetOnBoardingShown
 import com.yyusufsefa.videogameappcompose.domain.usecase.onboarding.OnBoardingUseCase
 import com.yyusufsefa.videogameappcompose.domain.usecase.onboarding.SaveOnBoardingShown
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -25,31 +26,4 @@ object DataStoreModule {
         return DataStoreManagerImpl(context)
     }
 
-    @Provides
-    @Singleton
-    fun provideSaveOnBoardingShownUseCase(
-        dataStoreManager: DataStoreManager
-    ): SaveOnBoardingShown {
-        return SaveOnBoardingShown(dataStoreManager)
-    }
-
-    @Provides
-    @Singleton
-    fun provideGetOnBoardingShownUseCase(
-        dataStoreManager: DataStoreManager
-    ): GetOnBoardingShown {
-        return GetOnBoardingShown(dataStoreManager)
-    }
-
-    @Provides
-    @Singleton
-    fun provideOnBoardingUseCase(
-        saveOnBoardingShown: SaveOnBoardingShown,
-        getOnBoardingShown: GetOnBoardingShown
-    ): OnBoardingUseCase {
-        return OnBoardingUseCase(
-            saveOnBoardingShown = saveOnBoardingShown,
-            getOnBoardingShown = getOnBoardingShown
-        )
-    }
 }

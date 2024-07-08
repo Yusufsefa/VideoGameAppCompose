@@ -31,13 +31,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.yyusufsefa.videogameappcompose.R
+import com.yyusufsefa.videogameappcompose.presentation.components.VideoGameCard
 import com.yyusufsefa.videogameappcompose.presentation.components.VideoGameSearchBar
-import com.yyusufsefa.videogameappcompose.presentation.home.components.VideoGameCard
+import com.yyusufsefa.videogameappcompose.ui.theme.ColorArrowBack
+import com.yyusufsefa.videogameappcompose.ui.theme.ColorBackground
+import com.yyusufsefa.videogameappcompose.ui.theme.Dimens
 
 
 @Composable
@@ -56,24 +56,24 @@ fun SearchScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(colorResource(id = R.color.bg_home_screen))
+            .background(ColorBackground)
     ) {
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(Dimens.MarginM))
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(40.dp)
-                .padding(horizontal = 16.dp)
+                .height(Dimens.SearchBarSize)
+                .padding(horizontal = Dimens.MarginM)
         ) {
             Card(
                 modifier = Modifier
-                    .size(40.dp)
-                    .clip(RoundedCornerShape(8.dp))
+                    .size(Dimens.SearchBarSize)
+                    .clip(RoundedCornerShape(Dimens.MarginXS))
                     .clickable {
                         navController.popBackStack()
                     },
                 colors = CardDefaults.cardColors(
-                    containerColor = colorResource(id = R.color.bg_arrow_back).copy(alpha = 0.5f),
+                    containerColor = ColorArrowBack.copy(alpha = 0.5f),
                     contentColor = Color.Blue,
                     disabledContainerColor = Color.Gray,
                     disabledContentColor = Color.DarkGray
@@ -84,15 +84,15 @@ fun SearchScreen(
                     contentDescription = "Back Icon",
                     tint = Color.White,
                     modifier = Modifier
-                        .size(40.dp)
-                        .padding(6.dp)
+                        .size(Dimens.SearchBarSize)
+                        .padding(Dimens.SearchBarIconPadding)
                 )
             }
 
             VideoGameSearchBar(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(horizontal = 12.dp),
+                    .padding(horizontal = Dimens.MarginS),
                 hint = "Search",
                 searchQuery = searchQuery,
                 onTextChange = {
@@ -104,7 +104,7 @@ fun SearchScreen(
             )
         }
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(Dimens.MarginM))
 
         when {
             searchViewState.isLoading -> {
@@ -120,13 +120,13 @@ fun SearchScreen(
                 LazyVerticalGrid(
                     columns = GridCells.Fixed(2),
                     modifier = Modifier.fillMaxSize(),
-                    contentPadding = PaddingValues(4.dp)
+                    contentPadding = PaddingValues(Dimens.MarginXXS)
                 ) {
                     items(searchViewState.searchVideoGames) { videoGame ->
                         VideoGameCard(
                             videoGame = videoGame,
                             modifier = Modifier
-                                .padding(8.dp),
+                                .padding(Dimens.MarginXS),
                             onClick = {
                                 videoGame.id?.let { id -> navigateToDetail(id) }
                             }

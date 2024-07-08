@@ -7,8 +7,7 @@ import com.yyusufsefa.videogameappcompose.presentation.navigation.Route
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -20,12 +19,18 @@ class MainViewModel @Inject constructor(
     val startDestination: StateFlow<String?> = _startDestination
 
     init {
-        onBoardingUseCase.getOnBoardingShown().onEach { isShown ->
-            if (isShown) {
-                _startDestination.value = Route.BottomNavigation.route
-            } else {
-                _startDestination.value = Route.OnBoardingNavigation.route
+        getOnBoardingShown()
+    }
+
+    private fun getOnBoardingShown() {
+        viewModelScope.launch {
+            onBoardingUseCase.getOnBoardingShown().collect { isShown ->
+                if (isShown) {
+                    _startDestination.value = Route.BottomNavigation.route
+                } else {
+                    _startDestination.value = Route.OnBoardingNavigation.route
+                }
             }
-        }.launchIn(viewModelScope)
+        }
     }
 }

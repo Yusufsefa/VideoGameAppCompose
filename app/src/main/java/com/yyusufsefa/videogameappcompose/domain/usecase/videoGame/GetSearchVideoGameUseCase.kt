@@ -2,13 +2,15 @@ package com.yyusufsefa.videogameappcompose.domain.usecase.videoGame
 
 import com.yyusufsefa.videogameappcompose.core.api.Resource
 import com.yyusufsefa.videogameappcompose.core.api.apiFlow
-import com.yyusufsefa.videogameappcompose.data.remote.dto.VideoGameResponse
+import com.yyusufsefa.videogameappcompose.domain.model.VideoGame
 import com.yyusufsefa.videogameappcompose.domain.repository.VideoGameRepository
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class GetSearchVideoGameUseCase(private val videoGameRepository: VideoGameRepository) {
-
-    operator fun invoke(query: String): Flow<Resource<VideoGameResponse>> = apiFlow {
+class GetSearchVideoGameUseCase @Inject constructor(
+    private val videoGameRepository: VideoGameRepository
+) {
+    operator fun invoke(query: String): Flow<Resource<List<VideoGame>>> = apiFlow {
         videoGameRepository.searchVideoGames(query)
     }
 

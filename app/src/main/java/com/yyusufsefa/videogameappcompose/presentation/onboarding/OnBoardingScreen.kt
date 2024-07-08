@@ -20,15 +20,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.yyusufsefa.videogameappcompose.R
+import com.yyusufsefa.videogameappcompose.presentation.components.PageIndicator
 import com.yyusufsefa.videogameappcompose.presentation.components.VideoGameButton
 import com.yyusufsefa.videogameappcompose.presentation.onboarding.components.OnBoardingPage
-import com.yyusufsefa.videogameappcompose.presentation.components.PageIndicator
+import com.yyusufsefa.videogameappcompose.ui.theme.ColorOnBoarding
+import com.yyusufsefa.videogameappcompose.ui.theme.ColorOnBoardingButtonColor
+import com.yyusufsefa.videogameappcompose.ui.theme.Dimens
 import com.yyusufsefa.videogameappcompose.ui.theme.VideoGameAppComposeTheme
 import kotlinx.coroutines.launch
 
@@ -40,7 +40,7 @@ fun OnBoardingScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(colorResource(id = R.color.bg_on_boarding))
+            .background(ColorOnBoarding)
     ) {
         val pagerState = rememberPagerState(initialPage = 0) {
             pages.size
@@ -76,7 +76,7 @@ fun OnBoardingScreen(
                 fontSize = 20.sp,
                 style = MaterialTheme.typography.bodyMedium,
                 fontWeight = FontWeight.Bold,
-                color = colorResource(id = R.color.bg_on_boarding_button_color)
+                color = ColorOnBoardingButtonColor
             )
         }
 
@@ -96,7 +96,7 @@ fun OnBoardingScreen(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 30.dp)
+                .padding(horizontal = Dimens.MarginXXL)
                 .navigationBarsPadding(),
             verticalArrangement = Arrangement.SpaceBetween,
             horizontalAlignment = Alignment.CenterHorizontally
@@ -104,7 +104,7 @@ fun OnBoardingScreen(
             PageIndicator(
                 modifier = Modifier
                     .fillMaxWidth(0.24f)
-                    .padding(vertical = 16.dp),
+                    .padding(vertical = Dimens.MarginM),
                 pagesSize = pages.size,
                 selectedPage = pagerState.currentPage
             )
@@ -112,7 +112,7 @@ fun OnBoardingScreen(
             VideoGameButton(
                 modifier = Modifier
                     .fillMaxWidth(0.8f)
-                    .padding(vertical = 16.dp),
+                    .padding(vertical = Dimens.MarginM),
                 text = buttonsState.value[1],
                 onClick = {
                     scope.launch {

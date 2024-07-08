@@ -38,6 +38,9 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.yyusufsefa.videogameappcompose.R
+import com.yyusufsefa.videogameappcompose.ui.theme.ColorHintText
+import com.yyusufsefa.videogameappcompose.ui.theme.ColorTintSearchBar
+import com.yyusufsefa.videogameappcompose.ui.theme.Dimens
 import com.yyusufsefa.videogameappcompose.ui.theme.VideoGameAppComposeTheme
 
 @Composable
@@ -45,10 +48,10 @@ fun VideoGameSearchBar(
     modifier: Modifier = Modifier,
     hint: String,
     isEnabled: Boolean = true,
-    height: Dp = 40.dp,
-    elevation: Dp = 4.dp,
-    cornerShape: Shape = RoundedCornerShape(12.dp),
-    backgroundColor: Int = R.color.bg_home_screen,
+    height: Dp = Dimens.SearchBarSize,
+    elevation: Dp = Dimens.MarginXXS,
+    cornerShape: Shape = RoundedCornerShape(Dimens.MarginS),
+    backgroundColor: Int = R.color.bg_search_bar,
     searchQuery: String = "",
     onSearchClicked: () -> Unit = {},
     onTextChange: (String) -> Unit = {},
@@ -61,7 +64,7 @@ fun VideoGameSearchBar(
             .fillMaxWidth()
             .shadow(elevation = elevation, shape = cornerShape)
             .background(color = colorResource(id = backgroundColor), shape = cornerShape)
-            .padding(start = 16.dp, end = 4.dp),
+            .padding(start = Dimens.MarginM, end = Dimens.MarginXXS),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         BasicTextField(
@@ -80,7 +83,7 @@ fun VideoGameSearchBar(
                 if (text.isEmpty()) {
                     Text(
                         text = hint,
-                        color = colorResource(id = R.color.hint_text_color),
+                        color = ColorHintText,
                         fontSize = 16.sp,
                         fontWeight = FontWeight.Bold,
                     )
@@ -93,7 +96,7 @@ fun VideoGameSearchBar(
             ),
             keyboardActions = KeyboardActions(onSearch = { onSearchClicked() }),
             singleLine = true,
-            cursorBrush = SolidColor(colorResource(id = R.color.tint_color_icon_search_bar)),
+            cursorBrush = SolidColor(ColorTintSearchBar),
             modifier = Modifier
                 .weight(1f)
                 .clickable {
@@ -105,7 +108,7 @@ fun VideoGameSearchBar(
         if (text.isNotEmpty()) {
             Box(
                 modifier = Modifier
-                    .size(40.dp)
+                    .size(Dimens.SearchBarSize)
                     .background(color = Color.Transparent, shape = CircleShape)
                     .clickable {
                         text = ""
@@ -115,16 +118,16 @@ fun VideoGameSearchBar(
                 Icon(
                     painter = painterResource(id = R.drawable.ic_clear),
                     contentDescription = null,
-                    tint = colorResource(id = R.color.tint_color_icon_search_bar),
+                    tint = ColorTintSearchBar,
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(6.dp)
+                        .padding(Dimens.IconPadding)
                 )
             }
         } else {
             Box(
                 modifier = Modifier
-                    .size(40.dp)
+                    .size(Dimens.SearchBarSize)
                     .background(color = Color.Transparent, shape = CircleShape)
                     .clickable {
                         onSearchClicked()
@@ -133,10 +136,10 @@ fun VideoGameSearchBar(
                 Icon(
                     painter = painterResource(id = R.drawable.ic_search),
                     contentDescription = null,
-                    tint = colorResource(id = R.color.tint_color_icon_search_bar),
+                    tint = ColorTintSearchBar,
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(4.dp)
+                        .padding(Dimens.MarginXXS)
                 )
             }
         }

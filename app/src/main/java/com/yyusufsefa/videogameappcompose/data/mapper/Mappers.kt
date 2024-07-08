@@ -49,5 +49,4 @@ fun VideoGameDetail.mapToVideoGameEntity(isFavorite: Boolean): VideoGameFavorite
         platforms = platforms,
         isFavorite = isFavorite
     )
-
 }

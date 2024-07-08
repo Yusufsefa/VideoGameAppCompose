@@ -15,11 +15,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.yyusufsefa.videogameappcompose.R
+import com.yyusufsefa.videogameappcompose.ui.theme.ColorBottomMenuBar
+import com.yyusufsefa.videogameappcompose.ui.theme.Dimens
 import com.yyusufsefa.videogameappcompose.ui.theme.VideoGameAppComposeTheme
 
 @Composable
@@ -32,11 +32,11 @@ fun VideoGameBottomNavigationBar(
 
     NavigationBar(
         modifier = modifier
-            .padding(vertical = 8.dp)
-            .height(56.dp)
+            .padding(vertical = Dimens.MarginXS)
+            .height(Dimens.BottomBarHeight)
             .fillMaxWidth(),
-        containerColor = colorResource(R.color.bg_bottom_menu_bar),
-        tonalElevation = 10.dp
+        containerColor = ColorBottomMenuBar,
+        tonalElevation = Dimens.BottomBarPadding
     ) {
         items.forEachIndexed { index, item ->
             NavigationBarItem(
@@ -46,7 +46,7 @@ fun VideoGameBottomNavigationBar(
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
                         Icon(
                             painter = painterResource(id = item.icon), contentDescription = null,
-                            modifier = Modifier.size(24.dp)
+                            modifier = Modifier.size(Dimens.MarginXL)
                         )
                         Text(text = item.title)
                     }
@@ -54,9 +54,9 @@ fun VideoGameBottomNavigationBar(
                 colors = NavigationBarItemDefaults.colors(
                     selectedIconColor = Color.White,
                     unselectedIconColor = Color.Gray,
-                    indicatorColor = colorResource(R.color.bg_bottom_menu_bar)
+                    indicatorColor = ColorBottomMenuBar
                 ),
-                modifier = Modifier.padding(horizontal = 10.dp)
+                modifier = Modifier.padding(horizontal = Dimens.BottomBarPadding)
             )
         }
     }

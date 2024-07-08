@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.yyusufsefa.videogameappcompose.presentation.onboarding.Page
 import com.yyusufsefa.videogameappcompose.presentation.onboarding.pages
+import com.yyusufsefa.videogameappcompose.ui.theme.Dimens
 import com.yyusufsefa.videogameappcompose.ui.theme.VideoGameAppComposeTheme
 
 @Composable
@@ -26,7 +27,7 @@ fun OnBoardingPage(
     page: Page
 ) {
 
-    Column(modifier = modifier.padding(16.dp)) {
+    Column(modifier = modifier.padding(Dimens.MarginM)) {
         Image(
             modifier = Modifier
                 .fillMaxWidth(),
@@ -36,7 +37,7 @@ fun OnBoardingPage(
         )
 
         Text(
-            modifier = modifier.padding(vertical = 16.dp, horizontal = 8.dp),
+            modifier = modifier.padding(vertical = Dimens.MarginM, horizontal = Dimens.MarginXS),
             text = page.title,
             style = MaterialTheme.typography.displaySmall,
             fontWeight = FontWeight.Bold,
@@ -46,7 +47,7 @@ fun OnBoardingPage(
         )
 
         Text(
-            modifier = modifier.padding(horizontal = 8.dp),
+            modifier = modifier.padding(horizontal = Dimens.MarginXS),
             text = page.desc,
             style = MaterialTheme.typography.bodyMedium,
             textAlign = TextAlign.Center,

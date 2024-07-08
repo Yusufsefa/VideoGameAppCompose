@@ -10,16 +10,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.unit.dp
-import com.yyusufsefa.videogameappcompose.R
+import com.yyusufsefa.videogameappcompose.ui.theme.ColorSelectedPageIndicator
+import com.yyusufsefa.videogameappcompose.ui.theme.Dimens
 
 @Composable
 fun PageIndicator(
     modifier: Modifier = Modifier,
     pagesSize: Int,
     selectedPage: Int,
-    selectedColor: Color = colorResource(id = R.color.bg_selected_color_page_indicator),
+    selectedColor: Color = ColorSelectedPageIndicator,
     unSelectedColor: Color = Color.Gray
 ) {
 
@@ -27,7 +26,7 @@ fun PageIndicator(
         repeat(times = pagesSize) { page ->
             Box(
                 modifier = Modifier
-                    .size(14.dp)
+                    .size(Dimens.PadeIndicatorSize)
                     .clip(CircleShape)
                     .background(color = if (page == selectedPage) selectedColor else unSelectedColor)
             )

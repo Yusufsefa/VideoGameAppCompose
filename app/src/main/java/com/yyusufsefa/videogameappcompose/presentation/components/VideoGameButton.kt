@@ -9,11 +9,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.yyusufsefa.videogameappcompose.R
+import com.yyusufsefa.videogameappcompose.ui.theme.ColorOnBoardingButtonColor
+import com.yyusufsefa.videogameappcompose.ui.theme.Dimens
 
 @Composable
 fun VideoGameButton(
@@ -26,13 +26,13 @@ fun VideoGameButton(
         modifier = modifier,
         onClick = onClick,
         colors = ButtonDefaults.buttonColors(
-            containerColor = colorResource(id = R.color.bg_on_boarding_button_color),
+            containerColor = ColorOnBoardingButtonColor,
             contentColor = Color.White
         ),
-        shape = RoundedCornerShape(size = 12.dp)
+        shape = RoundedCornerShape(size = Dimens.MarginS)
     ) {
         Text(
-            modifier = Modifier.padding(4.dp),
+            modifier = Modifier.padding(Dimens.MarginXXS),
             text = text,
             style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.SemiBold),
             color = Color.White,

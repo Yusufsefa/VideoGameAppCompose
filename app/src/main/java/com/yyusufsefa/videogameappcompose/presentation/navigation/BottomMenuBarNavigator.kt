@@ -12,7 +12,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.colorResource
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -25,6 +24,7 @@ import com.yyusufsefa.videogameappcompose.presentation.home.HomeScreen
 import com.yyusufsefa.videogameappcompose.presentation.navigation.components.BottomNavItem
 import com.yyusufsefa.videogameappcompose.presentation.navigation.components.VideoGameBottomNavigationBar
 import com.yyusufsefa.videogameappcompose.presentation.search.SearchScreen
+import com.yyusufsefa.videogameappcompose.ui.theme.ColorBackground
 
 @Composable
 fun BottomMenuBarNavigator() {
@@ -68,10 +68,10 @@ fun BottomMenuBarNavigator() {
     Scaffold(
         modifier = Modifier
             .fillMaxSize()
-            .background(colorResource(id = R.color.bg_home_screen)), bottomBar = {
+            .background(ColorBackground), bottomBar = {
             if (isBottomBarVisible) {
                 VideoGameBottomNavigationBar(
-                    modifier = Modifier.background(colorResource(id = R.color.bg_home_screen)),
+                    modifier = Modifier.background(ColorBackground),
                     items = bottomNavigationItems,
                     selectedItem = selectedItem
                 ) { index ->

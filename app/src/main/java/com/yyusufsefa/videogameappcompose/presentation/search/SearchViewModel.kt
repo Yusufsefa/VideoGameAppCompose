@@ -3,22 +3,20 @@ package com.yyusufsefa.videogameappcompose.presentation.search
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.yyusufsefa.videogameappcompose.core.api.Resource
-import com.yyusufsefa.videogameappcompose.data.mapper.mapToVideoGame
-import com.yyusufsefa.videogameappcompose.domain.usecase.videoGame.VideoGameUseCase
+import com.yyusufsefa.videogameappcompose.domain.usecase.videoGame.GetSearchVideoGameUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SearchViewModel @Inject constructor(private val videoGameUseCase: VideoGameUseCase) :
-    ViewModel() {
+class SearchViewModel @Inject constructor(
+    private val searchVideoGameUseCase: GetSearchVideoGameUseCase
+) : ViewModel() {
 
     private val _searchState = MutableStateFlow(SearchState())
     val searchState: StateFlow<SearchState> = _searchState.asStateFlow()
@@ -47,12 +45,18 @@ class SearchViewModel @Inject constructor(private val videoGameUseCase: VideoGam
         _searchState.value = _searchState.value.copy(isLoading = true)
         searchJob?.cancel()
         searchJob = viewModelScope.launch {
-            videoGameUseCase.searchVideoGameUseCase(query)
-                .onEach { result ->
+            searchVideoGameUseCase(query)
+                .catch { e ->
+                    _searchState.value = _searchState.value.copy(
+                        error = e.message ?: "Unknown error",
+                        isLoading = false,
+                        searchVideoGames = emptyList()
+                    )
+                }.collect { result ->
                     _searchState.value = when (result) {
                         is Resource.Loading -> _searchState.value.copy(isLoading = true)
                         is Resource.Success -> {
-                            if (result.data.results.isEmpty()) {
+                            if (result.data.isEmpty()) {
                                 _searchState.value.copy(
                                     isLoading = false,
                                     error = if (query.isNotEmpty()) "No results found" else "",
@@ -60,7 +64,7 @@ class SearchViewModel @Inject constructor(private val videoGameUseCase: VideoGam
                                 )
                             } else {
                                 _searchState.value.copy(
-                                    searchVideoGames = result.data.results.map { it.mapToVideoGame() },
+                                    searchVideoGames = result.data,
                                     isLoading = false,
                                     error = ""
                                 )
@@ -74,14 +78,7 @@ class SearchViewModel @Inject constructor(private val videoGameUseCase: VideoGam
                         )
                     }
                 }
-                .catch { e ->
-                    _searchState.value = _searchState.value.copy(
-                        error = e.message ?: "Unknown error",
-                        isLoading = false,
-                        searchVideoGames = emptyList()
-                    )
-                }
-                .launchIn(viewModelScope)
+
         }
     }
 }

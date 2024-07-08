@@ -8,21 +8,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="bg_selected_color_page_indicator">#E95E5E</color>
-    <color name="bg_on_boarding_button_color">#EA5E5E</color>
-    <color name="bg_on_boarding">#323760</color>
-
-    <color name="bg_home_screen">#323760</color>
-    <color name="bg_video_game_card">#262A4E</color>
+    <color name="color_background">#323760</color>
     <color name="bg_search_bar">#25294D</color>
-    <color name="hint_text_color">#C0C6F7</color>
-    <color name="tint_color_icon_search_bar">#C0C6F7</color>
-
-    <color name="bg_rating">#03FFD2</color>
-    <color name="bg_header_rating">#5A58A0</color>
-    <color name="bg_arrow_back">#6277A4</color>
-
-    <color name="bg_detail_screen">#1F1935</color>
-    <color name="bg_bottom_menu_bar">#323760</color>
 
 </resources>

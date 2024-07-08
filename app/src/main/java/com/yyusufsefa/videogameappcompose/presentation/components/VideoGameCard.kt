@@ -1,4 +1,4 @@
-package com.yyusufsefa.videogameappcompose.presentation.home.components
+package com.yyusufsefa.videogameappcompose.presentation.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -28,17 +28,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.yyusufsefa.videogameappcompose.R
 import com.yyusufsefa.videogameappcompose.domain.model.VideoGame
+import com.yyusufsefa.videogameappcompose.ui.theme.ColorVideoGameCard
+import com.yyusufsefa.videogameappcompose.ui.theme.Dimens
 import com.yyusufsefa.videogameappcompose.ui.theme.VideoGameAppComposeTheme
 
 @Composable
@@ -52,19 +51,19 @@ fun VideoGameCard(
 
     Box(
         modifier = modifier
-            .width(240.dp)
-            .height(250.dp)
+            .width(Dimens.VideoGameCardWidth)
+            .height(Dimens.VideoGameCardHeight)
             .clickable { videoGame.id?.let { onClick?.invoke(it) } }
     ) {
         Card(
             modifier = Modifier
-                .padding(horizontal = 12.dp, vertical = 40.dp)
+                .padding(horizontal = Dimens.MarginS, vertical = Dimens.Margin4XL)
                 .fillMaxWidth()
                 .fillMaxHeight(1f)
                 .align(Alignment.BottomCenter),
-            shape = RoundedCornerShape(40.dp),
+            shape = RoundedCornerShape(Dimens.Margin4XL),
             colors = CardDefaults.cardColors(
-                containerColor = colorResource(id = R.color.bg_video_game_card),
+                containerColor = ColorVideoGameCard,
                 contentColor = Color.Blue,
                 disabledContainerColor = Color.Gray,
                 disabledContentColor = Color.DarkGray
@@ -90,18 +89,18 @@ fun VideoGameCard(
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier
-                        .padding(4.dp)
-                        .background(Color(0x80000000), shape = RoundedCornerShape(8.dp))
-                        .padding(horizontal = 8.dp, vertical = 4.dp),
+                        .padding(Dimens.MarginXXS)
+                        .background(Color(0x80000000), shape = RoundedCornerShape(Dimens.MarginXS))
+                        .padding(horizontal = Dimens.MarginXS, vertical = Dimens.MarginXXS),
                     horizontalArrangement = Arrangement.Center,
                 ) {
                     Icon(
                         imageVector = Icons.Default.Star,
                         contentDescription = "Star Icon",
                         tint = Color.Yellow,
-                        modifier = Modifier.size(12.dp)
+                        modifier = Modifier.size(Dimens.MarginS)
                     )
-                    Spacer(modifier = Modifier.width(4.dp))
+                    Spacer(modifier = Modifier.width(Dimens.MarginXXS))
                     Text(
                         text = videoGame.rating.toString(),
                         fontSize = 13.sp,
@@ -117,9 +116,8 @@ fun VideoGameCard(
                 .fillMaxWidth()
                 .fillMaxHeight(0.6f)
                 .align(Alignment.TopCenter),
-            shape = RoundedCornerShape(24.dp)
+            shape = RoundedCornerShape(Dimens.MarginXL)
         ) {
-
             AsyncImage(
                 modifier = Modifier.fillMaxSize(),
                 model = ImageRequest.Builder(context).data(videoGame.imageUrl).build(),

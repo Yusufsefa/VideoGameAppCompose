@@ -5,8 +5,9 @@ import com.yyusufsefa.videogameappcompose.core.api.apiFlow
 import com.yyusufsefa.videogameappcompose.data.local.model.VideoGameFavoriteEntity
 import com.yyusufsefa.videogameappcompose.domain.repository.VideoGameRepository
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class GetSearchFavoriteVideoGameUseCase(
+class GetSearchFavoriteVideoGameUseCase @Inject constructor(
     private val videoGameRepository: VideoGameRepository
 ) {
     operator fun invoke(query: String): Flow<Resource<List<VideoGameFavoriteEntity>>> = apiFlow {
