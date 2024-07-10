@@ -19,8 +19,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.yyusufsefa.videogameappcompose.presentation.components.LoadingScreen
 import com.yyusufsefa.videogameappcompose.presentation.favorite.components.FavoriteItemCard
@@ -84,7 +85,11 @@ fun FavoriteScreen(
                 ) {
                     Text(
                         text = favoriteState.error,
-                        color = Color.White
+                        style = TextStyle(
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.SemiBold,
+                            color = Color.White
+                        )
                     )
                 }
             }
