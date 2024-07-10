@@ -100,7 +100,6 @@ dependencies {
     testImplementation(libs.androidx.core.testing)
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.truth)
-    testImplementation(libs.mockwebserver)
     testImplementation(libs.mockk)
     testImplementation(libs.turbine)
     debugImplementation(libs.ui.test.manifest)
@@ -110,7 +109,6 @@ dependencies {
     androidTestImplementation(libs.androidx.core.testing)
     androidTestImplementation(libs.kotlinx.coroutines.test)
     androidTestImplementation(libs.truth)
-    androidTestImplementation(libs.mockwebserver)
     androidTestImplementation(libs.mockk)
     androidTestImplementation(libs.turbine)
 
