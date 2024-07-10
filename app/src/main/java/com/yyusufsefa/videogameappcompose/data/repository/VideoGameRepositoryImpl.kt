@@ -8,8 +8,9 @@ import com.yyusufsefa.videogameappcompose.data.remote.api.VideoGameApi
 import com.yyusufsefa.videogameappcompose.domain.model.VideoGame
 import com.yyusufsefa.videogameappcompose.domain.model.VideoGameDetail
 import com.yyusufsefa.videogameappcompose.domain.repository.VideoGameRepository
+import javax.inject.Inject
 
-class VideoGameRepositoryImpl(
+class VideoGameRepositoryImpl @Inject constructor(
     private val videoGameApi: VideoGameApi,
     private val videoGameDao: VideoGameDao
 ) : VideoGameRepository {

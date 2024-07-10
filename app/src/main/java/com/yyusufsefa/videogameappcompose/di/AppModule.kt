@@ -5,9 +5,6 @@ import androidx.room.Room
 import com.yyusufsefa.videogameappcompose.data.local.TypeConvertor
 import com.yyusufsefa.videogameappcompose.data.local.VideoGameDatabase
 import com.yyusufsefa.videogameappcompose.data.local.dao.VideoGameDao
-import com.yyusufsefa.videogameappcompose.data.remote.api.VideoGameApi
-import com.yyusufsefa.videogameappcompose.data.repository.VideoGameRepositoryImpl
-import com.yyusufsefa.videogameappcompose.domain.repository.VideoGameRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,11 +16,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
-
-    @Provides
-    @Singleton
-    fun provideVideoGameRepository(api: VideoGameApi, dao: VideoGameDao): VideoGameRepository =
-        VideoGameRepositoryImpl(api, dao)
 
     @Provides
     @Singleton
