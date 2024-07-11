@@ -1,8 +1,6 @@
 <h1 align="center">Video Game App Compose</h1>
 
-<p>  
-  This Video Game App showcases modern Android development with Kotlin, Jetpack Compose, Hilt, Coroutines, Flow, and Jetpack (Room, ViewModel) using Material Design principles and based on the MVVM architecture. It leverages the [RAWG API](https://rawg.io/apidocs) to offer detailed and current information on a wide range of video games.
-</p>
+This Video Game App showcases modern Android development with Kotlin, Jetpack Compose, Hilt, Coroutines, Flow, and Jetpack (Room, ViewModel) using Material Design principles and based on the MVVM architecture. It leverages the [RAWG API](https://rawg.io/apidocs) to offer detailed and current information on a wide range of video games.
 
 
 ## Technologies
@@ -27,11 +25,9 @@
 ![clean_architecture](https://github.com/user-attachments/assets/b3a19b6d-4f0d-4bc7-ba82-3a2911f40468)
 
 
-
-
 ## Screens
 
-<img src="https://github.com/user-attachments/assets/8fd75072-2fe4-4159-9076-ef86b59a775e" width="210"  alt="1"/> <img src="https://github.com/user-attachments/assets/708da015-62f6-4f9a-b23a-a282aeae7984" width="210"  alt="2"/> <img src="https://github.com/user-attachments/assets/0158f306-052a-4cd9-9bbd-54fbd51b7155" width="210"  alt="3"/> 
+<img src="https://github.com/user-attachments/assets/8fd75072-2fe4-4159-9076-ef86b59a775e" width="210"  alt="1"/> <img src="https://github.com/user-attachments/assets/708da015-62f6-4f9a-b23a-a282aeae7984" width="210"  alt="2"/> <img src="https://github.com/user-attachments/assets/fbb78377-12b0-48c6-8350-7d2cc721c7f7" width="210"  alt="3"/> 
 <img src="https://github.com/user-attachments/assets/8c466e0e-4170-46cc-aa12-fb0f5714e023" width="210"  alt="4"/> 
 
 https://github.com/user-attachments/assets/a3f9895b-39c9-4b1e-8b1a-c8970874b977
